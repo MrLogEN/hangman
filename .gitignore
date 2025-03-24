@@ -2,3 +2,6 @@
 *.iml
 *.iws
 out/
+client/target
+server/target
+api/target
