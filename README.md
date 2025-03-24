@@ -23,6 +23,9 @@ The Oracle's version, you can find here [OpenJDK's website](https://www.oracle.c
 ### Maven
 Installing Meven can be done by following instructions from Maven [official website](https://maven.apache.org/install.html)
 
+### PMD
+PMD is a static code analyzer that can be used to enforce good programming habits and convetions.
+
 ## Run
 Clone this repository
 ```bash
