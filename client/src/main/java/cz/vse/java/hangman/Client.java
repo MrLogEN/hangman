@@ -1,3 +1,5 @@
+package cz.vse.java.hangman;
+
 import java.lang.System;
 
 public class Client {
