@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Define the Maven modules
+MODULES=("client" "server" "api")
+
+# Define the PMD ruleset file
+PMD_RULESET="pmd-rules.xml"  # Ensure this exists at the root of your project
+
+# Initialize error flag
+ERROR_FOUND=0
+
+echo "Running PMD on all modules..."
+
+# Loop through each module and run PMD
+for MODULE in "${MODULES[@]}"; do
+    if [ -d "$MODULE/src" ]; then
+        echo "Checking module: $MODULE"
+
+        # Run PMD for the module
+        mvn -f "$MODULE/pom.xml" pmd:check > "$MODULE/pmd-report.txt"
+
+        # Check if PMD found issues
+        if grep -q "<violation " "$MODULE/target/pmd.xml"; then
+            echo "PMD found issues in $MODULE:"
+            cat "$MODULE/pmd-report.txt"
+            ERROR_FOUND=1
+        else
+            echo "No PMD issues in $MODULE."
+        fi
+    else
+        echo "Module $MODULE does not have a 'src' directory. Skipping..."
+    fi
+done
+
+# Stop commit if any violations were found
+if [ "$ERROR_FOUND" -eq 1 ]; then
+    echo "Fix PMD violations before committing."
+    exit 1
+else
+    echo "All modules passed PMD checks."
+    exit 0
+fi
