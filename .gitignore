@@ -5,3 +5,4 @@ out/
 client/target
 server/target
 api/target
+pmd-report.txt
