@@ -1,7 +1,13 @@
 package cz.vse.java.hangman;
 
-public class Client {
-	public static void main(String[] args) {
-		System.out.println("Hello world!");
-	}
+@SuppressWarnings("checkstyle:HideUtilityClassConstructor")
+public final class Client {
+
+    /**
+     * Entry point for Client application.
+     * @param args
+     */
+    public static void main(final String[] args) {
+        System.out.println("Hello world!");
+    }
 }

@@ -1,7 +1,12 @@
 package cz.vse.java.hangman;
 
 public class Server {
-	public static void main(String[] args) {
-		System.out.println("Hello world!");
-	}
+
+    /**
+     *  Entry point for Client application.
+     *  @param args
+     */
+    public static void main(final String[] args) {
+        System.out.println("Hello world!");
+    }
 }
