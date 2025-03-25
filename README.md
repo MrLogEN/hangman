@@ -51,3 +51,21 @@ java -jar server/target/server-version.jar
 java -jar client/target/client-version.jar
 ```
 > ⚠️ Note that the server must be started before the client, otherwise the client has nothing to connect to.
+
+## Development
+We enforce certain styling rules using PMD and Checkstyle.
+These rules are checked before commit using commit hooks.
+For this reason there is a `setup` script, or rather two scripts, that sets up these hooks in your local repository.
+
+### Windows
+On Windows run the bat script from the project root.
+```powershell
+.\setup.bat
+```
+> Note that for running git hooks on windows you need to use Git Bash which
+> comes with git installation by default. Git hooks should work with IntelliJ IDEA out of the box, regardless of OS.
+### Linux
+On Linux run this script.
+```bash
+./setup.sh
+```
