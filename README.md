@@ -50,7 +50,7 @@ java -jar server/target/server-version.jar
 # Run the client
 java -jar client/target/client-version.jar
 ```
-> ⚠️ Note that the server must be started before the client, otherwise the client has nothing to connect to.
+> Warning: The server must be started before the client, otherwise the client has nothing to connect to.
 
 ## Development
 We enforce certain styling rules using PMD and Checkstyle.
@@ -62,10 +62,30 @@ On Windows run the bat script from the project root.
 ```powershell
 .\setup.bat
 ```
-> Note that for running git hooks on windows you need to use Git Bash which
+> Note: For running git hooks on windows you need to use Git Bash which
 > comes with git installation by default. Git hooks should work with IntelliJ IDEA out of the box, regardless of OS.
 ### Linux
 On Linux run this script.
 ```bash
 ./setup.sh
 ```
+### Git hooks
+Git hooks run PMD and Checkstyle.
+You can run these check by yourself from your terminal:
+
+```bash
+# PMD
+# run for each module separately
+mvn -f "module_name/pom.xml" pmd:check
+
+#Checkstyle
+# run from the project root
+mvn checkstyle:check
+```
+These checks will prompt you to fix mistakes if any.
+
+> Tip: You might want to disable the check when commiting non-java files.
+> You can do that by running
+> `git commit --no-verify`
+> or
+> Editing the VC settings to not run git hooks in your IDE.
