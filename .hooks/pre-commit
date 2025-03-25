@@ -1,42 +1,42 @@
 #!/bin/bash
 
-# Define the Maven modules
-MODULES=("client" "server" "api")
-
 # Define the PMD ruleset file
 PMD_RULESET="pmd-rules.xml"  # Ensure this exists at the root of your project
 
 # Initialize error flag
 ERROR_FOUND=0
 
-echo "Running PMD on all modules..."
+echo "Running PMD and Checkstyle on all modules..."
 
-# Loop through each module and run PMD
-for MODULE in "${MODULES[@]}"; do
-    if [ -d "$MODULE/src" ]; then
-        echo "Checking module: $MODULE"
+# Run PMD across all modules
+mvn pmd:check > pmd-report.txt
 
-        # Run PMD for the module
-        mvn -f "$MODULE/pom.xml" pmd:check > "$MODULE/pmd-report.txt"
+# Check if PMD found issues
+if grep -q "<violation " "target/pmd.xml"; then
+    echo "PMD found issues:"
+    cat pmd-report.txt
+    ERROR_FOUND=1
+else
+    echo "No PMD issues."
+fi
 
-        # Check if PMD found issues
-        if grep -q "<violation " "$MODULE/target/pmd.xml"; then
-            echo "PMD found issues in $MODULE:"
-            cat "$MODULE/pmd-report.txt"
-            ERROR_FOUND=1
-        else
-            echo "No PMD issues in $MODULE."
-        fi
-    else
-        echo "Module $MODULE does not have a 'src' directory. Skipping..."
-    fi
-done
+# Run Checkstyle across all modules
+mvn checkstyle:check > checkstyle-report.txt
+
+# Check if Checkstyle found issues
+if grep -q "Checkstyle Violations" "target/checkstyle-result.xml"; then
+    echo "Checkstyle found issues:"
+    cat checkstyle-report.txt
+    ERROR_FOUND=1
+else
+    echo "No Checkstyle issues."
+fi
 
 # Stop commit if any violations were found
 if [ "$ERROR_FOUND" -eq 1 ]; then
-    echo "Fix PMD violations before committing."
+    echo "Fix PMD or Checkstyle violations before committing."
     exit 1
 else
-    echo "All modules passed PMD checks."
+    echo "All modules passed PMD and Checkstyle checks."
     exit 0
 fi
