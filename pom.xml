@@ -33,7 +33,8 @@
                     <artifactId>maven-checkstyle-plugin</artifactId>
                     <version>3.6.0</version>
                     <configuration>
-                        <configLocation>config/sun_checks.xml</configLocation>
+                        <configLocation>${project.basedir}/config/sun_checks.xml</configLocation>
+                        <suppressionsLocation>${project.basedir}/config/checkstyle-suppressions.xml</suppressionsLocation>
                         <encoding>UTF-8</encoding>
                         <consoleOutput>true</consoleOutput>
                         <failsOnError>true</failsOnError>
@@ -77,8 +78,8 @@
                     </reportSet>
                 </reportSets> 
                 <configuration>
-                    <configLocation>config/sun_checks.xml</configLocation>
-                    <suppressionsLocation>config/checkstyle-suppressions.xml</suppressionsLocation>
+                    <configLocation>${project.basedir}/config/sun_checks.xml</configLocation>
+                    <suppressionsLocation>${project.basedir}/config/checkstyle-suppressions.xml</suppressionsLocation>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
