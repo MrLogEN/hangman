@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # pre-commit hooks
-PRE_COMMIT_SOURCE="./.hooks/pre-commit"
+PRE_COMMIT_SOURCE="./config/.hooks/pre-commit"
 PRE_COMMIT_TARGET="./.git/hooks/pre-commit"
 
 # Remove any existing pre-commit hooks

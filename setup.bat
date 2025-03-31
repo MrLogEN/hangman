@@ -1,6 +1,6 @@
 @echo off
 
-SET PRE_COMMIT_SOURCE=.hooks\pre-commit
+SET PRE_COMMIT_SOURCE=config\.hooks\pre-commit
 SET PRE_COMMIT_TARGET=.git\hooks\pre-commit
 
 IF EXIST "%PRE_COMMIT_TARGET%" (
