@@ -50,7 +50,8 @@ java -jar server/target/server-version.jar
 # Run the client
 java -jar client/target/client-version.jar
 ```
-> Warning: The server must be started before the client, otherwise the client has nothing to connect to.
+> [!WARNING]\
+> The server must be started before the client, otherwise the client has nothing to connect to.
 
 ## Development
 We enforce certain styling rules using PMD and Checkstyle.
@@ -62,7 +63,8 @@ On Windows run the bat script from the project root.
 ```powershell
 .\setup.bat
 ```
-> Note: For running git hooks on windows you need to use Git Bash which
+> [!NOTE]\
+> For running git hooks on windows you need to use Git Bash which
 > comes with git installation by default. Git hooks should work with IntelliJ IDEA out of the box, regardless of OS.
 ### Linux
 On Linux run this script.
@@ -84,7 +86,8 @@ mvn checkstyle:check
 ```
 These checks will prompt you to fix mistakes if any.
 
-> Tip: You might want to disable the check when commiting non-java files.
+> [!TIP]\
+> You might want to disable the check when commiting non-java files.
 > You can do that by running
 > `git commit --no-verify`
 > or
@@ -110,7 +113,8 @@ Then you can fetch the newly created branch to your local repository.
 git fetch
 git checkout branch_name
 ```
-> Warning: Make sure to fetch the changes first and checkout the branch.
+> [!WARNING]\
+> Make sure to fetch the changes first and checkout the branch.
 > Otherwise, you might end up with the branch not existing (on your local clone) and making changes on the `main` branch.
 
 When you are done with the feature, you can create a pull request on GitHub. Which can then be either reviewed by others
@@ -136,7 +140,8 @@ You can also specify commit hash instead of `HEAD~n` to rebase from a specific c
 
 When you run this command, you will be presented with a list of commits in your default editor.
 
-> Tip: You can change the git's default editor by running `git config --global core.editor "editor_name"`
+> [!TIP]\
+> You can change the git's default editor by running `git config --global core.editor "editor_name"`
 
 Let's say you have 5 commits and you want to squash them into one. This is how the list would look like.
 ```bash
