@@ -11,10 +11,10 @@ public class MessageWrapperSerializerTest {
 	@Test
 	public void ShouldSerializeDummyMessage() {
 		Gson gson = new GsonBuilder()
-					.registerTypeAdapter(MessageWrapper.class, new MessageWrapperSerializer<>())
+					.registerTypeAdapter(MessageWrapper.class, new MessageWrapperSerializer())
 					.create();
 		DummyMessage dummyMessage = new DummyMessage(10, "Some name", "Some desc");
-		MessageWrapper wrapper = new MessageWrapper<DummyMessage>(dummyMessage, DummyMessage.class);
+		MessageWrapper wrapper = new MessageWrapper(dummyMessage, DummyMessage.class);
 		String expected = "{\"type\":\"cz.vse.java.hangman.api.DummyMessage\","
 				+ "\"message\":{\"id\":10,\"name\":\"Some name\",\"desc\":\"Some desc\"}}";
 

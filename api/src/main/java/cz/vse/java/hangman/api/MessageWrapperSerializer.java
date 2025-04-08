@@ -16,13 +16,13 @@ import java.lang.reflect.Type;
 *		.create();
  *</code></pre>
  */	
-public final class MessageWrapperSerializer<T extends Message> implements JsonSerializer<MessageWrapper<T>> {
+public final class MessageWrapperSerializer implements JsonSerializer<MessageWrapper> {
 
 	@Override
-	public JsonElement serialize(MessageWrapper<T> src, Type typeOfSrc, JsonSerializationContext context) {
+	public JsonElement serialize(MessageWrapper src, Type typeOfSrc, JsonSerializationContext context) {
 		JsonObject json = new JsonObject();
 		
-		json.addProperty("type", src.type().getName());
+		json.addProperty("type", src.type().getTypeName());
 
 		JsonElement messageJson = context.serialize(src.message(), src.type());
 		json.add("message", messageJson);
