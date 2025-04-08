@@ -1,4 +1,6 @@
-package cz.vse.java.hangman.api;
+package cz.vse.java.hangman.api.messages.serialization;
+
+import cz.vse.java.hangman.api.messages.Message;
 
 import java.lang.reflect.Type;
 

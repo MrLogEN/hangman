@@ -1,7 +1,7 @@
-package cz.vse.java.hangman.api;
+package cz.vse.java.hangman.api.messages.serialization;
 
 import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
+import cz.vse.java.hangman.api.messages.Message;
 
 import java.lang.reflect.Type;
 

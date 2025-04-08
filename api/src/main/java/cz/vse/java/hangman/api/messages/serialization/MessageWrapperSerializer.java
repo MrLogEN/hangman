@@ -1,4 +1,4 @@
-package cz.vse.java.hangman.api;
+package cz.vse.java.hangman.api.messages.serialization;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.gson.JsonObject;

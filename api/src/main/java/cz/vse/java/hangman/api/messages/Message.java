@@ -1,4 +1,4 @@
-package cz.vse.java.hangman.api;
+package cz.vse.java.hangman.api.messages;
 /**
  * This interface is a marking interface for
  * Hangman communication protocol messages.
