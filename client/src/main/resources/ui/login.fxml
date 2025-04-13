@@ -7,14 +7,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:controller="cz.vse.java.hangman.controllers.LoginController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label contentDisplay="CENTER" prefHeight="51.0" prefWidth="233.0" text="Zadejte jméno:">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <TextField alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="400.0" prefHeight="44.0" prefWidth="300.0" promptText="Jméno:">
+      <TextField fx:id="usernameField" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="400.0" prefHeight="44.0" prefWidth="300.0" promptText="Jméno:">
          <font>
             <Font size="20.0" />
          </font>
@@ -22,7 +22,7 @@
             <Insets top="25.0" />
          </VBox.margin>
       </TextField>
-      <Button mnemonicParsing="false" prefHeight="58.0" prefWidth="126.0" text="Potvrdit">
+      <Button fx:id="confirmButton" onAction="#handleConfirmButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="126.0" text="Potvrdit">
          <VBox.margin>
             <Insets top="25.0" />
          </VBox.margin>
