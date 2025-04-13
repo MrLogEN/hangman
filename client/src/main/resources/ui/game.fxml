@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:controller="cz.vse.java.hangman.controllers.GameController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
 <bottom>
    <GridPane minHeight="120.0" BorderPane.alignment="CENTER">
       <columnConstraints>
@@ -38,86 +38,87 @@
          <Insets bottom="15.0" left="15.0" right="15.0" />
       </BorderPane.margin>
 
-    
-      <Button text="A" GridPane.columnIndex="0" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="B" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="C" GridPane.columnIndex="2" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="D" GridPane.columnIndex="3" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="E" GridPane.columnIndex="4" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="F" GridPane.columnIndex="5" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="G" GridPane.columnIndex="6" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="H" GridPane.columnIndex="7" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="I" GridPane.columnIndex="8" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="J" GridPane.columnIndex="9" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="K" GridPane.columnIndex="10" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="L" GridPane.columnIndex="11" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="M" GridPane.columnIndex="12" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
 
-<Button text="N" GridPane.columnIndex="0" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="O" GridPane.columnIndex="1" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="P" GridPane.columnIndex="2" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="Q" GridPane.columnIndex="3" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="R" GridPane.columnIndex="4" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="S" GridPane.columnIndex="5" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="T" GridPane.columnIndex="6" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="U" GridPane.columnIndex="7" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="V" GridPane.columnIndex="8" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="W" GridPane.columnIndex="9" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="X" GridPane.columnIndex="10" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="Y" GridPane.columnIndex="11" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
-<Button text="Z" GridPane.columnIndex="12" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
-   <GridPane.margin><Insets top="5.0" bottom="5.0" left="5.0" right="5.0"/></GridPane.margin>
-</Button>
+      <Button fx:id="letterAButton" text="A" onAction="#handleLetterClick" GridPane.columnIndex="0" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterBButton" text="B" onAction="#handleLetterClick" GridPane.columnIndex="1" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterCButton" text="C" onAction="#handleLetterClick" GridPane.columnIndex="2" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterDButton" text="D" onAction="#handleLetterClick" GridPane.columnIndex="3" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterEButton" text="E" onAction="#handleLetterClick" GridPane.columnIndex="4" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterFButton" text="F" onAction="#handleLetterClick" GridPane.columnIndex="5" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterGButton" text="G" onAction="#handleLetterClick" GridPane.columnIndex="6" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterHButton" text="H" onAction="#handleLetterClick" GridPane.columnIndex="7" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterIButton" text="I" onAction="#handleLetterClick" GridPane.columnIndex="8" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterJButton" text="J" onAction="#handleLetterClick" GridPane.columnIndex="9" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterKButton" text="K" onAction="#handleLetterClick" GridPane.columnIndex="10" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterLButton" text="L" onAction="#handleLetterClick" GridPane.columnIndex="11" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterMButton" text="M" onAction="#handleLetterClick" GridPane.columnIndex="12" GridPane.rowIndex="0" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+
+      <Button fx:id="letterNButton" text="N" onAction="#handleLetterClick" GridPane.columnIndex="0" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterOButton" text="O" onAction="#handleLetterClick" GridPane.columnIndex="1" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterPButton" text="P" onAction="#handleLetterClick" GridPane.columnIndex="2" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterQButton" text="Q" onAction="#handleLetterClick" GridPane.columnIndex="3" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterRButton" text="R" onAction="#handleLetterClick" GridPane.columnIndex="4" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterSButton" text="S" onAction="#handleLetterClick" GridPane.columnIndex="5" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterTButton" text="T" onAction="#handleLetterClick" GridPane.columnIndex="6" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterUButton" text="U" onAction="#handleLetterClick" GridPane.columnIndex="7" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterVButton" text="V" onAction="#handleLetterClick" GridPane.columnIndex="8" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterWButton" text="W" onAction="#handleLetterClick" GridPane.columnIndex="9" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterXButton" text="X" onAction="#handleLetterClick" GridPane.columnIndex="10" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterYButton" text="Y" onAction="#handleLetterClick" GridPane.columnIndex="11" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+      <Button fx:id="letterZButton" text="Z" onAction="#handleLetterClick" GridPane.columnIndex="12" GridPane.rowIndex="1" maxWidth="Infinity" maxHeight="Infinity">
+         <GridPane.margin><Insets top="5" bottom="5" left="5" right="5"/></GridPane.margin>
+      </Button>
+
 
    </GridPane>
 </bottom>
@@ -129,12 +130,12 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ListView>
+            <ListView fx:id="playersListView">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
             </ListView>
-            <Button mnemonicParsing="false" prefHeight="190.0" prefWidth="119.0" text="Potvrdit">
+            <Button fx:id="readyAndConfirmGuessButton" onAction="#handleReadyAndConfirmGuessButton" mnemonicParsing="false" prefHeight="190.0" prefWidth="119.0" text="Potvrdit">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>
@@ -149,7 +150,7 @@
       </VBox>
    </right>
    <left>
-      <Button mnemonicParsing="false" prefHeight="56.0" prefWidth="142.0" text="Opustit místnost" BorderPane.alignment="TOP_LEFT">
+      <Button fx:id="leaveRoomButton" onAction="#handleLeaveRoomButton" mnemonicParsing="false" prefHeight="56.0" prefWidth="142.0" text="Opustit místnost" BorderPane.alignment="TOP_LEFT">
          <BorderPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </BorderPane.margin>
@@ -161,12 +162,12 @@
    <center>
       <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Label text="S L O V O">
+            <Label fx:id="guessedWordLabel" text="S L O V O">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <ImageView fitHeight="352.0" fitWidth="411.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="hangmanImageView" fitHeight="352.0" fitWidth="411.0" pickOnBounds="true" preserveRatio="true" />
          </children>
          <BorderPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
