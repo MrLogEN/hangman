@@ -1,5 +1,6 @@
 package cz.vse.java.hangman.api.messages;
 
+import cz.vse.java.hangman.api.Game;
 import cz.vse.java.hangman.api.Player;
 import cz.vse.java.hangman.api.messages.serialization.MessageWrapper;
 import cz.vse.java.hangman.api.messages.client.request.*;
@@ -138,5 +139,29 @@ public class MessageFactory {
      */
     public static ServerCreateRoomFailureMessage createServerCreateRoomFailureMessage(String reason) {
         return new ServerCreateRoomFailureMessage(reason);
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.client.request.ClientStartGameMessage}.
+     * @param playerDTO the sender, must be the owner of the room.
+     * @param roomDTO the {@link RoomDTO} object representing the room.
+     * @return a new instance of {@link ClientStartGameMessage}.
+     */
+    public static ClientStartGameMessage createClientStartGameMessage(PlayerDTO playerDTO, RoomDTO roomDTO) {
+        return new ClientStartGameMessage(playerDTO, roomDTO);
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerStartGameFailureMessage}.
+     * @param reason the reason for the failure.
+     * @return a new instance of {@link ServerStartGameFailureMessage}.
+     */
+    public static ServerStartGameFailureMessage createServerStartGameFailureMessage(String reason) {
+        return new ServerStartGameFailureMessage(reason);
+    }
+
+    public static ServerStartGameSuccessMessage createServerStartGameSuccessMessage(Game game) {
+        GameDTO gameDTO = GameDTO.fromGame(game);
+        return new ServerStartGameSuccessMessage(gameDTO);
     }
 }
