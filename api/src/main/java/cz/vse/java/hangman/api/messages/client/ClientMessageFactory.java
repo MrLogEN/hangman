@@ -61,4 +61,8 @@ public class ClientMessageFactory {
         return new ClientStartGameMessage(playerDTO, roomDTO);
     }
 
+    public static ClientTakeGuessMessage createClientTakeGuessMessage(char guess) {
+        return new ClientTakeGuessMessage(guess);
+    }
+
 }

@@ -1,10 +1,12 @@
 package cz.vse.java.hangman.api.messages.server;
 
 import cz.vse.java.hangman.api.Game;
+import cz.vse.java.hangman.api.Guess;
 import cz.vse.java.hangman.api.Player;
 import cz.vse.java.hangman.api.Room;
 import cz.vse.java.hangman.api.messages.Message;
 import cz.vse.java.hangman.api.messages.serialization.MessageWrapper;
+import cz.vse.java.hangman.api.messages.server.request.ServerSyncClientGameMessage;
 import cz.vse.java.hangman.api.messages.server.response.*;
 import cz.vse.java.hangman.api.dtos.*;
 
@@ -124,5 +126,33 @@ public class ServerMessageFactory {
     public static ServerStartGameSuccessMessage createServerStartGameSuccessMessage(Game game) {
         GameDTO gameDTO = GameDTO.fromGame(game);
         return new ServerStartGameSuccessMessage(gameDTO);
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerTakeGuessSuccessMessage}.
+     * @param guess the {@link Guess} object representing the guess.
+     * @return a new instance of {@link ServerTakeGuessSuccessMessage}.
+     */
+    public static ServerTakeGuessSuccessMessage createServerTakeGuessSuccessMessage(Guess guess) {
+        return new ServerTakeGuessSuccessMessage(GuessDTO.fromGuess(guess));
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerTakeGuessFailureMessage}.
+     * @param reason the reason for the failure.
+     * @return a new instance of {@link ServerTakeGuessFailureMessage}.
+     */
+    public static ServerTakeGuessFailureMessage createServerTakeGuessFailureMessage(String reason) {
+        return new ServerTakeGuessFailureMessage(reason);
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.request.ServerSyncClientGameMessage}.
+     * @param game the {@link Game} object representing the game state to be synced to players.
+     * @return a new instance of {@link ServerSyncClientGameMessage}.
+     */
+    public static ServerSyncClientGameMessage createServerSyncClientGameMessage(Game game) {
+        GameDTO gameDTO = GameDTO.fromGame(game);
+        return new ServerSyncClientGameMessage(gameDTO);
     }
 }
