@@ -2,6 +2,7 @@ package cz.vse.java.hangman.api.messages;
 
 import cz.vse.java.hangman.api.Game;
 import cz.vse.java.hangman.api.Player;
+import cz.vse.java.hangman.api.Room;
 import cz.vse.java.hangman.api.messages.serialization.MessageWrapper;
 import cz.vse.java.hangman.api.messages.client.request.*;
 import cz.vse.java.hangman.api.messages.client.response.*;
@@ -9,6 +10,7 @@ import cz.vse.java.hangman.api.messages.server.request.*;
 import cz.vse.java.hangman.api.messages.server.response.*;
 import cz.vse.java.hangman.api.dtos.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -64,11 +66,17 @@ public class MessageFactory {
 
     /**
      * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerLoginSuccessMessage}.
-     * @param roomDTOS the set of {@link RoomDTO} objects representing the rooms.
+     * @param rooms the set of {@link Room} objects representing the rooms.
      * @return a new instance of {@link ServerListRoomsSuccessMessage}.
      */
-    public static ServerListRoomsSuccessMessage createServerListRoomsSuccessMessage(Set<RoomDTO> roomDTOS) {
-        return new ServerListRoomsSuccessMessage(roomDTOS);
+    public static ServerListRoomsSuccessMessage createServerListRoomsSuccessMessage(Set<Room> rooms) {
+        Set<RoomDTO> roomDtos = new HashSet<>();
+
+        rooms.forEach(r -> {
+            roomDtos.add(RoomDTO.fromRoom(r));
+        });
+
+        return new ServerListRoomsSuccessMessage(roomDtos);
     }
 
     /**
@@ -92,11 +100,11 @@ public class MessageFactory {
 
     /**
      * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerJoinRoomSuccessMessage}.
-     * @param roomDTO the {@link RoomDTO} object representing the room.
+     * @param room the {@link Room} object representing the room.
      * @return a new instance of {@link ServerJoinRoomSuccessMessage}.
      */
-    public static ServerJoinRoomSuccessMessage createServerJoinRoomSuccessMessage(RoomDTO roomDTO) {
-        return new ServerJoinRoomSuccessMessage(roomDTO);
+    public static ServerJoinRoomSuccessMessage createServerJoinRoomSuccessMessage(Room room) {
+        return new ServerJoinRoomSuccessMessage(RoomDTO.fromRoom(room));
     }
 
     /**
@@ -128,8 +136,8 @@ public class MessageFactory {
      * @param roomDTO the {@link RoomDTO} object representing the room.
      * @return a new instance of {@link ServerCreateRoomSuccessMessage}.
      */
-    public static ServerCreateRoomSuccessMessage createServerCreateRoomSuccessMessage(RoomDTO roomDTO) {
-        return new ServerCreateRoomSuccessMessage(roomDTO);
+    public static ServerCreateRoomSuccessMessage createServerCreateRoomSuccessMessage(Room room) {
+        return new ServerCreateRoomSuccessMessage(RoomDTO.fromRoom(room));
     }
 
     /**
