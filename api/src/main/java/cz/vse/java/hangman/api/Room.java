@@ -19,5 +19,9 @@ public class Room {
         players.add(leader);
     }
 
+    public Set<Player> getPlayers() {
+        return players;
+    }
+
 
 }
