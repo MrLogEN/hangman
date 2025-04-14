@@ -78,4 +78,32 @@ public class MessageFactory {
     public static ServerListRoomsFailureMessage createServerListRoomsFailureMessage(String reason) {
         return new ServerListRoomsFailureMessage(reason);
     }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.client.request.ClientJoinRoomMessage}.
+     * @param player the player who wants to join the room.
+     * @param roomName the name of the room to join.
+     * @return a new instance of {@link ClientJoinRoomMessage}.
+     */
+    public static ClientJoinRoomMessage createClientJoinRoomMessage(PlayerDTO player, String roomName) {
+        return new ClientJoinRoomMessage(player, roomName);
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerJoinRoomSuccessMessage}.
+     * @param roomDTO the {@link RoomDTO} object representing the room.
+     * @return a new instance of {@link ServerJoinRoomSuccessMessage}.
+     */
+    public static ServerJoinRoomSuccessMessage createServerJoinRoomSuccessMessage(RoomDTO roomDTO) {
+        return new ServerJoinRoomSuccessMessage(roomDTO);
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerJoinRoomFailureMessage}.
+     * @param reason the reason for the failure.
+     * @return a new instance of {@link ServerJoinRoomFailureMessage}.
+     */
+    public static ServerJoinRoomFailureMessage createServerJoinRoomFailureMessage(String reason) {
+        return new ServerJoinRoomFailureMessage(reason);
+    }
 }
