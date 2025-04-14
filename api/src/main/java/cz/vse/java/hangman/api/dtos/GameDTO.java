@@ -6,6 +6,17 @@ import cz.vse.java.hangman.api.Player;
 import java.util.LinkedList;
 import java.util.Set;
 
+/**
+ * Data Transfer Object for Game.
+ * @param guessedLetters
+ * @param availableLetters
+ * @param wordProgress
+ * @param maxAttempts
+ * @param wrongAttempts
+ * @param currentPlayer
+ * @param players
+ * @param gameState
+ */
 public record GameDTO(Set<Character> guessedLetters,
                       Set<Character> availableLetters,
                       char[] wordProgress,
