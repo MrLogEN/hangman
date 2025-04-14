@@ -56,6 +56,9 @@ public class Game {
         return guessedLetters;
     }
 
+    public Set<Character> getAvailableLetters() {
+        return availableLetters;
+    }
     public void setAvailableLetters(Set<Character> availableLetters) {
         this.availableLetters = availableLetters;
     }
@@ -123,6 +126,9 @@ public class Game {
         }
         return wordProgress;
     }
+    public Player getCurrentPlayer() {
+        return players.get(currentPlayerIndex);
+    }
 
     private boolean wordComplete(){
         for (char c : word) {
@@ -132,4 +138,5 @@ public class Game {
         }
         return true;
     }
+
 }
