@@ -106,4 +106,37 @@ public class MessageFactory {
     public static ServerJoinRoomFailureMessage createServerJoinRoomFailureMessage(String reason) {
         return new ServerJoinRoomFailureMessage(reason);
     }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.client.request.ClientCreateRoomMessage}.
+     * @param player the owner of the room.
+     * @param roomName a unique name of the room.
+     * @param capacity the maximum number of players in the room.
+     * @return a new instance of {@link ClientCreateRoomMessage}.
+     */
+    public static ClientCreateRoomMessage createClientCreateRoomMessage(
+            PlayerDTO player,
+            String roomName,
+            int capacity
+    ) {
+        return new ClientCreateRoomMessage(player, roomName, capacity);
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerCreateRoomSuccessMessage}.
+     * @param roomDTO the {@link RoomDTO} object representing the room.
+     * @return a new instance of {@link ServerCreateRoomSuccessMessage}.
+     */
+    public static ServerCreateRoomSuccessMessage createServerCreateRoomSuccessMessage(RoomDTO roomDTO) {
+        return new ServerCreateRoomSuccessMessage(roomDTO);
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerCreateRoomFailureMessage}.
+     * @param reason the reason for the failure.
+     * @return a new instance of {@link ServerCreateRoomFailureMessage}.
+     */
+    public static ServerCreateRoomFailureMessage createServerCreateRoomFailureMessage(String reason) {
+        return new ServerCreateRoomFailureMessage(reason);
+    }
 }
