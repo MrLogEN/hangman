@@ -1,6 +1,5 @@
 package cz.vse.java.hangman.api.messages.client.request;
 
-import cz.vse.java.hangman.api.dtos.PlayerDTO;
 import cz.vse.java.hangman.api.messages.Message;
 
 /**
@@ -9,5 +8,5 @@ import cz.vse.java.hangman.api.messages.Message;
  * @param roomName The name of the room to create. Must be unique.
  * @param capacity Maximum capacity of the room. Must be greater than 0.
  */
-public record ClientCreateRoomMessage(PlayerDTO owner, String roomName, int capacity) implements Message {
+public record ClientCreateRoomMessage(String owner, String roomName, int capacity) implements Message {
 }

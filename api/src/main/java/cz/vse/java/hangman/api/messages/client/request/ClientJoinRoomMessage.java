@@ -8,5 +8,5 @@ import cz.vse.java.hangman.api.messages.Message;
  * @param player The player who wants to join the room.
  * @param roomName The name of the room to join.
  */
-public record ClientJoinRoomMessage(PlayerDTO player, String roomName) implements Message {
+public record ClientJoinRoomMessage(String player, String roomName) implements Message {
 }

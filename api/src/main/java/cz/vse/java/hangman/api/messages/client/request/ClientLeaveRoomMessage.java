@@ -6,8 +6,8 @@ import cz.vse.java.hangman.api.messages.Message;
 
 /**
  * A client's request to leaver a room.
- * @param player the player that is trying to leave the room.
- * @param room the room the player is trying to leave.
+ * @param player the player's name that is trying to leave the room.
+ * @param room the room's name the player is trying to leave.
  */
-public record ClientLeaveRoomMessage(PlayerDTO player, RoomDTO room) implements Message { }
+public record ClientLeaveRoomMessage(String player, String room) implements Message { }
 
