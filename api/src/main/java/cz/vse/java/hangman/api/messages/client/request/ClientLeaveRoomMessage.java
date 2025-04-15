@@ -1,7 +1,5 @@
 package cz.vse.java.hangman.api.messages.client.request;
 
-import cz.vse.java.hangman.api.dtos.PlayerDTO;
-import cz.vse.java.hangman.api.dtos.RoomDTO;
 import cz.vse.java.hangman.api.messages.Message;
 
 /**
