@@ -155,4 +155,18 @@ public class ServerMessageFactory {
         GameDTO gameDTO = GameDTO.fromGame(game);
         return new ServerSyncClientGameMessage(gameDTO);
     }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerLeaveRoomSuccessMessage}.
+     */
+    public static ServerLeaveRoomSuccessMessage createServerLeaveRoomSuccessMessage() {
+        return new ServerLeaveRoomSuccessMessage();
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.response.ServerLeaveRoomFailureMessage}.
+     */
+    public static ServerLeaveRoomFailureMessage createServerLeaveRoomFailureMessage(String reason) {
+        return new ServerLeaveRoomFailureMessage(reason);
+    }
 }

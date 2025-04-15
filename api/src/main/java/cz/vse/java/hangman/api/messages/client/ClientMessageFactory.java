@@ -1,5 +1,6 @@
 package cz.vse.java.hangman.api.messages.client;
 
+import cz.vse.java.hangman.api.Room;
 import cz.vse.java.hangman.api.dtos.PlayerDTO;
 import cz.vse.java.hangman.api.dtos.RoomDTO;
 import cz.vse.java.hangman.api.messages.client.request.*;
@@ -61,8 +62,21 @@ public class ClientMessageFactory {
         return new ClientStartGameMessage(playerDTO, roomDTO);
     }
 
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.client.request.ClientTakeGuessMessage}
+     * @param guess the letter that the player is trying to guess.
+     */
     public static ClientTakeGuessMessage createClientTakeGuessMessage(char guess) {
         return new ClientTakeGuessMessage(guess);
     }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.client.request.ClientLeaveRoomMessage}
+     * @param playerDTO the player that is trying to leave.
+     * @param roomDTO the room the player is trying to leave.
+     */
+    public static ClientLeaveRoomMessage createClientLeaverRoomMessage(PlayerDTO playerDTO, RoomDTO roomDTO) {
+        return new ClientLeaveRoomMessage(playerDTO, roomDTO);
+    } 
 
 }
