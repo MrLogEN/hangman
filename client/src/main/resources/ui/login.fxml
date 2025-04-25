@@ -7,8 +7,20 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:controller="cz.vse.java.hangman.controllers.LoginController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="cz.vse.java.hangman.controllers.LoginController">
    <children>
+      <VBox alignment="TOP_CENTER">
+         <children>
+            <Label fx:id="messageLabel" alignment="TOP_CENTER" contentDisplay="TOP" prefHeight="22.0" prefWidth="107.0" text="ERROR" textAlignment="CENTER">
+               <font>
+                  <Font size="35.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+         </children>
+      </VBox>
       <Label contentDisplay="CENTER" prefHeight="51.0" prefWidth="233.0" text="Zadejte jméno:">
          <font>
             <Font size="35.0" />
@@ -22,7 +34,7 @@
             <Insets top="25.0" />
          </VBox.margin>
       </TextField>
-      <Button fx:id="confirmButton" onAction="#handleConfirmButton" mnemonicParsing="false" prefHeight="58.0" prefWidth="126.0" text="Potvrdit">
+      <Button fx:id="confirmButton" mnemonicParsing="false" onAction="#handleConfirmButton" prefHeight="58.0" prefWidth="126.0" text="Potvrdit">
          <VBox.margin>
             <Insets top="25.0" />
          </VBox.margin>
