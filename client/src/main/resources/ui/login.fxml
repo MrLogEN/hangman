@@ -11,9 +11,9 @@
    <children>
       <VBox alignment="TOP_CENTER">
          <children>
-            <Label fx:id="messageLabel" alignment="TOP_CENTER" contentDisplay="TOP" prefHeight="22.0" prefWidth="107.0" text="ERROR" textAlignment="CENTER">
+            <Label fx:id="messageLabel" alignment="TOP_CENTER" contentDisplay="TOP" prefHeight="22.0" text="ERROR" textAlignment="CENTER">
                <font>
-                  <Font size="35.0" />
+                  <Font size="25.0" />
                </font>
                <VBox.margin>
                   <Insets />
