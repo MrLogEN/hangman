@@ -14,70 +14,58 @@ public class ClientCommandFactory implements CommandFactory {
     public Command fromMessage(Message message) {
 
 
+            if (message instanceof ServerLoginFailureMessage loginFailureMessage) {
+                return new LoginFailureCommand(loginFailureMessage);
 
-        return switch (message) {
-            case ServerLoginFailureMessage m -> new LoginFailureCommand();
-            case ServerLoginSuccessMessage m -> new LoginSuccessCommand();
-            case ServerListRoomsFailureMessage m -> new ListRooomsFailureCommand();
-            case ServerListRoomsSuccessMessage m -> new ListRoomsSuccessCommand();
-            case ServerCreateRoomFailureMessage m -> new CreateRoomFailureCommand();
-            case ServerCreateRoomSuccessMessage m -> new CreateRoomSuccessCommand();
-            case ServerJoinRoomFailureMessage m -> new JoinRoomFailureCommand();
-            case ServerJoinRoomSuccessMessage m -> new JoinRoomSuccessCommand();
-            case ServerStartGameFailureMessage m -> new StartGameFailureCommand();
-            case ServerStartGameSuccessMessage m -> new StartGameSuccessCommand();
-            case ServerTakeGuessFailureMessage m -> new TakeGuessFailureCommand();
-            case ServerTakeGuessSuccessMessage m -> new TakeGuessSuccessCommand();
-            case ServerLeaveRoomFailureMessage m -> new LeaveRoomFailureCommand();
-            case ServerLeaveRoomSuccessMessage m -> new LeaveRoomSuccessCommand();
-            default -> {
+            } else if (message instanceof ServerLoginSuccessMessage loginSuccessMessage) {
+                return new LoginSuccessCommand(loginSuccessMessage);
+
+            } else if (message instanceof ServerListRoomsFailureMessage listRoomsFailureMessage) {
+                return new ListRoomsFailureCommand(listRoomsFailureMessage);
+
+            } else if (message instanceof ServerListRoomsSuccessMessage listRoomsSuccessMessage) {
+                return new ListRoomsSuccessCommand(listRoomsSuccessMessage);
+
+            } else if (message instanceof ServerCreateRoomFailureMessage createRoomFailureMessage) {
+                return new CreateRoomFailureCommand(createRoomFailureMessage);
+
+            } else if (message instanceof ServerCreateRoomSuccessMessage createRoomSuccessMessage) {
+                return new CreateRoomSuccessCommand(createRoomSuccessMessage);
+
+            } else if (message instanceof ServerJoinRoomFailureMessage joinRoomFailureMessage) {
+                return new JoinRoomFailureCommand(joinRoomFailureMessage);
+
+            } else if (message instanceof ServerJoinRoomSuccessMessage joinRoomSuccessMessage) {
+                return new JoinRoomSuccessCommand(joinRoomSuccessMessage);
+
+            } else if (message instanceof ServerStartGameFailureMessage startGameFailureMessage) {
+                return new StartGameFailureCommand(startGameFailureMessage);
+
+            } else if (message instanceof ServerStartGameSuccessMessage startGameSuccessMessage) {
+                return new StartGameSuccessCommand(startGameSuccessMessage);
+
+            } else if (message instanceof ServerTakeGuessFailureMessage takeGuessFailureMessage) {
+                return new TakeGuessFailureCommand(takeGuessFailureMessage);
+
+            } else if (message instanceof ServerTakeGuessSuccessMessage takeGuessSuccessMessage) {
+                return new TakeGuessSuccessCommand(takeGuessSuccessMessage);
+
+            } else if (message instanceof ServerLeaveRoomFailureMessage leaveRoomFailureMessage) {
+                return new LeaveRoomFailureCommand(leaveRoomFailureMessage);
+
+            } else if (message instanceof ServerLeaveRoomSuccessMessage leaveRoomSuccessMessage) {
+                return new LeaveRoomSuccessCommand(leaveRoomSuccessMessage);
+
+            } else {
                 logger.error("Error while creating command from message: {}", message);
                 throw new IllegalArgumentException();
             }
 
-        };
+            }
 
 
 
 
 
 
-        /*
-        if (message instanceof ServerLoginFailureMessage) {
-            return new LoginFailureCommand();
-        } else if (message instanceof ServerLoginSuccessMessage) {
-            return new LoginSuccessCommand();
-        } else if (message instanceof ServerListRoomsFailureMessage) {
-            return new ListRooomsFailureCommand();
-        } else if (message instanceof ServerListRoomsSuccessMessage) {
-            return new ListRoomsSuccessCommand();
-        } else if (message instanceof ServerCreateRoomFailureMessage) {
-            return new CreateRoomFailureCommand();
-        } else if (message instanceof ServerCreateRoomSuccessMessage) {
-            return new CreateRoomSuccessCommand();
-        } else if (message instanceof ServerJoinRoomFailureMessage) {
-            return new JoinRoomFailureCommand();
-        } else if (message instanceof ServerJoinRoomSuccessMessage) {
-            return new JoinRoomSuccessCommand();
-        } else if (message instanceof ServerStartGameFailureMessage) {
-            return new StartGameFailureCommand();
-
-        } else if (message instanceof ServerStartGameSuccessMessage) {
-            return new StartGameSuccessCommand();
-        } else if (message instanceof ServerTakeGuessFailureMessage) {
-            return new TakeGuessFailureCommand();
-
-        } else if (message instanceof ServerTakeGuessSuccessMessage) {
-            return new TakeGuessSuccessCommand();
-        } else if (message instanceof ServerLeaveRoomFailureMessage) {
-            return new LeaveRoomFailureCommand();
-        } else if (message instanceof ServerLeaveRoomSuccessMessage) {
-            return new LeaveRoomSuccessCommand();
-        }
-
-
-        return null;
-
-         */
     }
-}

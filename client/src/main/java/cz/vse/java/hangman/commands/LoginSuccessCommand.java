@@ -1,6 +1,7 @@
 package cz.vse.java.hangman.commands;
 
 import cz.vse.java.hangman.api.commands.Command;
+import cz.vse.java.hangman.api.messages.server.response.ServerLoginSuccessMessage;
 import cz.vse.java.hangman.controllers.ControllerRegistry;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +12,12 @@ import java.io.IOException;
 
 public class LoginSuccessCommand implements Command {
     private static final Logger logger = LoggerFactory.getLogger(LoginSuccessCommand.class);
+
+    private ServerLoginSuccessMessage serverloginSuccessMessage;
+
+    public LoginSuccessCommand(ServerLoginSuccessMessage serverloginSuccessMessage) {
+        this.serverloginSuccessMessage = serverloginSuccessMessage;
+    }
 
     @Override
     public void execute() {
@@ -31,13 +38,14 @@ public class LoginSuccessCommand implements Command {
 
 
             ControllerRegistry.getInstance().getRoomsController().setClientHandler(ControllerRegistry.getInstance().getLoginController().getClientHandler());
-
+        //TODO IF
 
 
             logger.info("Setting up and loading room selection screen.");
             ControllerRegistry.getInstance().getPrimaryStage().setScene(scene);
 
-          //TODO  ControllerRegistry.getInstance().getRoomsController().setPlayerDTO();
+       ControllerRegistry.getInstance().getRoomsController().setPlayerDTO(serverloginSuccessMessage.playerDTO());
+       logger.info("Saving PlayerDTO into RoomsController.");
 
         } catch (IOException e) {
             logger.error("Failed to load the next screen: {}", e.getMessage());
