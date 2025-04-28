@@ -1,11 +1,13 @@
 package cz.vse.java.hangman.controllers;
 
 
-import cz.vse.java.hangman.Client;
+import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ControllerRegistry {
+  private Stage primaryStage;
+
     private static ControllerRegistry instance;
 
     private LoginController loginController;
@@ -13,7 +15,7 @@ public class ControllerRegistry {
     private CreateRoomController createRoomController;
     private GameController gameController;
 
-    private static final Logger logger = LoggerFactory.getLogger(Client.class);
+    private static final Logger logger = LoggerFactory.getLogger(ControllerRegistry.class);
     private ControllerRegistry() {
 
     }
@@ -55,5 +57,13 @@ public class ControllerRegistry {
 
     public void setGameController(GameController gameController) {
         this.gameController = gameController;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
 }
