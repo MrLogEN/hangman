@@ -20,14 +20,17 @@ public class LoginController {
     private TextField usernameField;
 
 
+    private ClientHandler fakeClientHandler = new ClientHandler();
 
-    private ClientHandler clientHandler = new ClientHandler();
+
+    private ClientHandler clientHandler;
 
 
     @FXML
     public void initialize() {
         logger.info("Initializing LoginController screen");
         messageLabel.setVisible(false);
+        messageLabel.setStyle("-fx-text-fill: red;");
 
 
     }
@@ -36,23 +39,27 @@ public class LoginController {
     private void handleConfirmButton(ActionEvent actionEvent) {
 
 
-
-
-
         String username = usernameField.getText();
 
-        logger.info("Checking, if the username field is empty.");
+        logger.info("Checking, if the username requirements.");
         if (username.isEmpty()) {
-            logger.error("Username field is empty.");
-            messageLabel.setText("Prosím, zadejte uživatelské jméno.");
-        } else  {
-                clientHandler.send(ClientMessageFactory.createClientLoginMessage(username));
+            logger.info("Username field is empty.");
+            messageLabel.setText("Zadejte platné uživatelské jméno.");
+            messageLabel.setVisible(true);
+
+        } else if (username.trim().isEmpty()) {
+            logger.info("Username contains only spaces.");
+            messageLabel.setText("Uživatelské jméno nemůže obsahovat pouze mezery.");
+            messageLabel.setVisible(true);
+        }  else if (username.length() >15) {
+            logger.info("Username field is too long.");
+            messageLabel.setText("Uživatelské jméno je příliš dlouhé (16+).");
+            messageLabel.setVisible(true);
+        }
+       else  {
+               clientHandler.send(ClientMessageFactory.createClientLoginMessage(username));
 
         }
-
-
-
-
 
 
     }
