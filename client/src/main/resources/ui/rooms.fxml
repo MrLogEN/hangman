@@ -23,9 +23,9 @@
    <center>
       <TableView fx:id="roomsTable" BorderPane.alignment="CENTER">
         <columns>
-          <TableColumn minWidth="100.0" prefWidth="-1.0" text="Název místnosti" />
-          <TableColumn minWidth="100.0" prefWidth="-1.0" text="Kapacita" />
-            <TableColumn minWidth="100.0" prefWidth="-1.0" text="Připojit" />
+          <TableColumn fx:id="nameColumn" minWidth="100.0" prefWidth="-1.0" text="Název místnosti" />
+          <TableColumn fx:id="maxPlayersColumn" minWidth="100.0" prefWidth="-1.0" text="Kapacita" />
+            <TableColumn fx:id="joinColumn" minWidth="100.0" prefWidth="-1.0" text="Připojit" />
         </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
