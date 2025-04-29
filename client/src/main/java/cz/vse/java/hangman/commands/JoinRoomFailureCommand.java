@@ -13,6 +13,6 @@ public class JoinRoomFailureCommand implements Command {
 
     @Override
     public void execute() {
-
+//TODO
     }
 }

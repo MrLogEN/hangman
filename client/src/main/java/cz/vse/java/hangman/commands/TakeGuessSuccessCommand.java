@@ -13,6 +13,6 @@ public class TakeGuessSuccessCommand implements Command {
 
     @Override
     public void execute() {
-
+//TODO
     }
 }
