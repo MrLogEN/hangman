@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LoginFailureCommand implements Command {
-    LoginController loginController = ControllerRegistry.getInstance().getLoginController();
+   private final LoginController loginController = ControllerRegistry.getInstance().getLoginController();
     private static final Logger logger = LoggerFactory.getLogger(LoginFailureCommand.class);
   private ServerLoginFailureMessage serverLoginFailureMessage;
 

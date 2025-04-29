@@ -13,6 +13,6 @@ public class StartGameSuccessCommand implements Command {
 
     @Override
     public void execute() {
-
+//TODO
     }
 }

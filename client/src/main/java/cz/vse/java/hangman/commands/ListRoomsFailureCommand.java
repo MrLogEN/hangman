@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ListRoomsFailureCommand implements Command {
-    private ServerListRoomsFailureMessage serverListRoomsFailureMessage;
+    private final ServerListRoomsFailureMessage serverListRoomsFailureMessage;
 
     public ListRoomsFailureCommand(ServerListRoomsFailureMessage serverListRoomsFailureMessage) {
         this.serverListRoomsFailureMessage = serverListRoomsFailureMessage;
@@ -16,5 +16,7 @@ public class ListRoomsFailureCommand implements Command {
     @Override
     public void execute() {
 
+
+//TODO
     }
 }
