@@ -8,6 +8,10 @@ import cz.vse.java.hangman.api.messages.server.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Factory for creating commands from messages.
+ */
+
 public class ClientCommandFactory implements CommandFactory {
     private static final Logger logger = LoggerFactory.getLogger(Client.class);
     @Override
@@ -56,7 +60,11 @@ public class ClientCommandFactory implements CommandFactory {
             } else if (message instanceof ServerLeaveRoomSuccessMessage leaveRoomSuccessMessage) {
                 return new LeaveRoomSuccessCommand(leaveRoomSuccessMessage);
 
-            } else {
+            }  else if (message instanceof SyncClientGameCommand syncClientGameCommand) {
+                return new SyncClientGameCommand(syncClientGameCommand);
+
+            }
+            else {
                 logger.error("Error while creating command from message: {}", message);
                 throw new IllegalArgumentException();
             }
