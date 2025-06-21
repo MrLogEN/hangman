@@ -5,16 +5,27 @@ import java.io.IOException;
 import java.lang.Thread;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.LinkedList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import cz.vse.java.hangman.server.commands.CommandWorkerFactory;
 
 public class Server {
 
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
     private final RoomManager roomManager;
+    private final CommandWorkerFactory workerFactory;
+    private final MessageHandler messageHandler;
+    private final List<ClientHandler> clients;
 
-    public Server(RoomManager roomManager){
-        this.roomManager = roomManager;
+    public Server(){
+        this.roomManager = new RoomManager();
+        this.workerFactory = new CommandWorkerFactory();
+        this.messageHandler = new MessageHandler(roomManager);
+        this.clients = new LinkedList<>();
     }
 
     public void start(int port){
@@ -23,13 +34,18 @@ public class Server {
             logger.info("The server has started and is waining for connections.");
             while(true) {
                 Socket socket = serverSocket.accept();
-                Thread clientHandlerThread = new Thread(new ClientHandler(socket, roomManager));
-                clientHandlerThread.start();
+                ClientHandler client = new ClientHandler(socket, roomManager, messageHandler, workerFactory);
+                clients.add(client);
             }
 
         }
         catch (IOException e) {
             logger.error("An error occured while trying to listen on port: {}", port, e);
+        }
+        finally{
+            for(ClientHandler client: clients) {
+                client.stopClient();
+            }
         }
     }
 }

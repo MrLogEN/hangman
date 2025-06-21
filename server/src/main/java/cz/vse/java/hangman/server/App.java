@@ -1,5 +1,7 @@
 package cz.vse.java.hangman.server;
 
+import cz.vse.java.hangman.server.commands.CommandWorkerFactory;
+
 public class App {
 
     /**
@@ -7,8 +9,7 @@ public class App {
      *  @param args
      */
     public static void main(String[] args) {
-        RoomManager roomManager = new RoomManager();
-        Server server = new Server(roomManager);
+        Server server = new Server();
         server.start(8080);
     }
 }
