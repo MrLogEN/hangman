@@ -22,6 +22,27 @@ public class Room {
     public Set<Player> getPlayers() {
         return players;
     }
+    public String getName() {
+        return name;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public Player getLeader() {
+        return leader;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void addPlayer(Player player) {
+        synchronized(players) {
+            players.add(player);
+        } 
+    }
 
     @Override
     public int hashCode() {
