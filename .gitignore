@@ -8,3 +8,6 @@ api/target
 pmd-report.txt
 /target
 checkstyle-report.txt
+**/.settings
+**/.classpath
+**/.project
