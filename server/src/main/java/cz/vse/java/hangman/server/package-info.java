@@ -4,4 +4,4 @@
  * @author Vilém Charwot
  * @version 1.0
  */
- package cz.vse.java.hangman;
+ package cz.vse.java.hangman.server;

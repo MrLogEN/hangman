@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
 
 public class ClientHandler implements Runnable{
+    private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
     private Socket socket;
 
     public ClientHandler(Socket socket) {
@@ -24,7 +27,7 @@ public class ClientHandler implements Runnable{
             messageListener.start();
         }
         catch (IOException e) {
-            // handle exception
+            logger.error("There was an error handling a client.", e);
         }
     }
 }
