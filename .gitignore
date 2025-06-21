@@ -11,3 +11,4 @@ checkstyle-report.txt
 **/.settings
 **/.classpath
 **/.project
+**/dependency-reduced-pom.xml
