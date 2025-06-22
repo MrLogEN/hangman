@@ -16,14 +16,14 @@ public class CommandWorker implements Runnable {
     public CommandWorker(Command command, List<Thread> workerThreads) {
         this.command = command;
         this.workerThreads = workerThreads;
-        synchronized(workerThreads) {
-            workerThreads.add(Thread.currentThread());
-        }
     }
 
     @Override
     public void run() {
         try {
+            synchronized(workerThreads) {
+                workerThreads.add(Thread.currentThread());
+            }
             logger.debug("Trying to execute: {}", command.getClass().getName());
             command.execute();
 
