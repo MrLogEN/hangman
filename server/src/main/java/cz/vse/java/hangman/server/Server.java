@@ -26,13 +26,17 @@ public class Server {
         this.clients = new LinkedList<>();
     }
 
+    public synchronized void removeClient(ClientHandler handler) {
+        clients.remove(handler);
+    }
+
     public void start(int port){
         logger.info("Starting server on port: {}", port);
         try (ServerSocket serverSocket = new ServerSocket(port);) {
             logger.info("The server has started and is waining for connections.");
             while(true) {
                 Socket socket = serverSocket.accept();
-                ClientHandler client = new ClientHandler(socket, roomManager, workerFactory);
+                ClientHandler client = new ClientHandler(socket, roomManager, workerFactory, this);
                 clients.add(client);
                 client.startClient();
             }

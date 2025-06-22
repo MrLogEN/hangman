@@ -2,6 +2,7 @@ package cz.vse.java.hangman.server;
 
 import cz.vse.java.hangman.api.Room;
 import cz.vse.java.hangman.api.Game.GameState;
+import cz.vse.java.hangman.api.Guess;
 import cz.vse.java.hangman.api.messages.Message;
 import cz.vse.java.hangman.api.messages.server.ServerMessageFactory;
 import cz.vse.java.hangman.api.Game;
@@ -9,6 +10,7 @@ import cz.vse.java.hangman.api.Player;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -38,7 +40,7 @@ public class RoomManager {
         unassignedPlayers.remove(name);
     }
 
-    public synchronized void addPlayerToRoom(String roomName, String playerName) {
+    public synchronized void addPlayerToRoom(String roomName, String playerName, ClientHandler handler) {
         Room room = rooms.get(roomName);
         Player player = unassignedPlayers.get(playerName);
 
@@ -55,6 +57,8 @@ public class RoomManager {
         room.addPlayer(player);
         unassignedPlayers.remove(playerName);
         playersInRooms.put(player.getName(), player);
+        handlers.get(room).add(handler);
+
         logger.info("Player {} joined room {}", playerName, roomName);
     }
 
@@ -93,7 +97,7 @@ public class RoomManager {
         return Collections.unmodifiableCollection(unassignedPlayers.values());
     }
 
-    public synchronized Room createRoom(String roomName, String owner, int capacity) {
+    public synchronized Room createRoom(String roomName, String owner, int capacity, ClientHandler handler) {
         if (rooms.containsKey(roomName)) {
             logger.warn("Room with the name {} alredy exists", roomName);
             return null;
@@ -111,7 +115,10 @@ public class RoomManager {
         Room room = new Room(roomName, capacity, player);
         unassignedPlayers.remove(player.getName());
         playersInRooms.put(player.getName(), player);
-
+        
+        var roomHandlers = new HashSet<ClientHandler>();
+        roomHandlers.add(handler);
+        handlers.put(room, roomHandlers);
         rooms.put(room.getName(), room);
         return room;
     }
@@ -138,17 +145,20 @@ public class RoomManager {
 
     public synchronized void notifyAllFromRoom(Room room, Message message) {
         Set<ClientHandler> clients = handlers.get(room);
+        if(clients == null) {
+            return;
+        }
         for(ClientHandler h: clients) {
             h.addMessageToQueue(message);
         }
     }
 
-    public synchronized void takeGuess(Room room, char letter) {
+    public synchronized Guess takeGuess(Room room, char letter) {
         Game game = room.getGame();
         if(game == null){
-            return;
+            return null;
         }
-        game.takeGuess(letter);
+        return game.takeGuess(letter);
     }
 
     public synchronized void startGame(Room room, Game game) {
@@ -166,6 +176,53 @@ public class RoomManager {
         }
 
         return game.getCurrentPlayer();
+    }
+
+    public synchronized boolean isGameRunning(Room room) {
+        Game game = room.getGame();
+        if(game == null) {
+            return false;
+        }
+
+        if(game.getGameState() != GameState.PLAYING) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public synchronized Room getPlayersRoom(Player player) {
+        for(Room r: handlers.keySet()) {
+            var p = r.getPlayer(player);
+            if(p != null) {
+                return r;
+            }
+        }
+        return null;
+    }
+
+    public synchronized Game getRoomGame(Room room) {
+        return room.getGame();
+    }
+
+    public synchronized void handlePlayerDisconnect(Player player, ClientHandler handler) {
+        Room room = getPlayersRoom(player);
+        if(room == null) {
+            return;
+        }
+        Game game= getRoomGame(room);
+        removePlayerFromRoom(player.getName(), room.getName());
+        removePlayer(player.getName());
+        notifyAllFromRoom(room, ServerMessageFactory.createServerSyncClientRoomMessage(room));
+
+        var hs = handlers.get(room);
+        hs.remove(handler);
+
+        if(game == null) {
+            return;
+        }
+        game.removePlayer(player);
+        notifyAllFromRoom(room, ServerMessageFactory.createServerSyncClientGameMessage(game));
     }
 
 }

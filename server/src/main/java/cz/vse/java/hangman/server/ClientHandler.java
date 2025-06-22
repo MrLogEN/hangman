@@ -20,6 +20,7 @@ public class ClientHandler {
     private final CommandWorkerFactory commandWorkerFactory;
     private final MessageHandler messageHandler;
     private final Socket socket;
+    private final Server server;
     private Player player;
     private Thread messageListener;
     private Thread messageWriter;
@@ -28,11 +29,13 @@ public class ClientHandler {
     public ClientHandler(
         Socket socket,
         RoomManager roomManager,
-        CommandWorkerFactory commandWorkerFactory
+        CommandWorkerFactory commandWorkerFactory,
+        Server server
     ) {
         this.socket = socket;
         this.roomManager = roomManager;
         this.commandWorkerFactory = commandWorkerFactory;
+        this.server = server;
         messageQueue = new LinkedBlockingQueue<>();
         messageHandler = new MessageHandler(roomManager, this);
         logger.debug("Listening for client's messages.");
@@ -64,6 +67,8 @@ public class ClientHandler {
         catch(IOException e) {
             logger.error("Failed to close client socket", e);
         }
+        roomManager.handlePlayerDisconnect(player, this);
+        server.removeClient(this);
         logger.info("Client stopped");
 
     }

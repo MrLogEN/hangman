@@ -57,6 +57,8 @@ public class MessageWriter implements Runnable {
             logger.error("Error writing to ObjectOutputStream: ", e);
             Thread.currentThread().interrupt();
         }
-
+        finally {
+            clientHandler.stopClient();
+        }
     }
 }

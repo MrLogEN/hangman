@@ -20,11 +20,38 @@ public record RoomDTO(String name, int maxPlayers, Set<PlayerDTO> playerDTOSet, 
         for(Player p: room.getPlayers()) {
             players.add(PlayerDTO.fromPlayer(p));
         }
-        return new RoomDTO(
-            room.getName(),
-            room.getMaxPlayers(), 
-            players,
-            PlayerDTO.fromPlayer(room.getLeader()),
-            GameDTO.fromGame(room.getGame()));
+        if (room.getGame() != null && room.getLeader() != null) {
+            return new RoomDTO(
+                room.getName(),
+                room.getMaxPlayers(), 
+                players,
+                PlayerDTO.fromPlayer(room.getLeader()),
+                GameDTO.fromGame(room.getGame()));
+        } 
+        else if(room.getGame() == null && room.getLeader() != null) {
+            return new RoomDTO(
+                room.getName(),
+                room.getMaxPlayers(), 
+                players,
+                PlayerDTO.fromPlayer(room.getLeader()),
+                null);
+        }
+        else if(room.getGame() != null && room.getLeader() == null) {
+            return new RoomDTO(
+                room.getName(),
+                room.getMaxPlayers(), 
+                players,
+                null,
+                GameDTO.fromGame(room.getGame()));
+        }
+        else {
+            return new RoomDTO(
+                room.getName(),
+                room.getMaxPlayers(), 
+                players,
+                null,
+                null);
+
+        }
     }
 }

@@ -1,9 +1,13 @@
 package cz.vse.java.hangman.api;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
+
+import cz.vse.java.hangman.api.Guess.GuessType;
 
 public class Game {
     public enum GameState{
@@ -16,6 +20,7 @@ public class Game {
     private char[] word;
     private Set<Character> guessedLetters;
     private Set<Character> availableLetters;
+    private List<Character> uniqueLetters;
     private int maxAttempts;
     private int wrongAttempts;
     private int attempts;
@@ -30,22 +35,25 @@ public class Game {
         if (room == null) {
             throw new IllegalArgumentException("Room cannot be null");
         }
-        if (maxAttempts <= 3) {
-            throw new IllegalArgumentException("Max attempts must be greater than 3");
-        }
         this.id = UUID.randomUUID();
         this.room = room;
         this.wordGenerator = wordGenerator;
-        word = wordGenerator.generateWord().toCharArray();
-        this.maxAttempts = maxAttempts;
+        String generatedWord = wordGenerator.generateWord();
+        word = generatedWord.toCharArray();
         this.wrongAttempts = 0;
         this.attempts = 0;
         this.gameState = GameState.PLAYING;
         this.guessedLetters = new HashSet<>();
-        this.availableLetters = wordGenerator.getCharset();
+        this.availableLetters = new HashSet<Character>(wordGenerator.getAlphabet());
         this.players = new LinkedList<>(room.getPlayers());
         this.currentPlayerIndex = 0;
-
+        this.uniqueLetters = new ArrayList<>();
+        for (char c : word) {
+            if (!uniqueLetters.contains(c)) {
+                uniqueLetters.add(c);
+            }
+        }
+        this.maxAttempts = 3 * uniqueLetters.size();
     }
 
     public UUID getId() {
@@ -61,6 +69,17 @@ public class Game {
     }
     public void setAvailableLetters(Set<Character> availableLetters) {
         this.availableLetters = availableLetters;
+    }
+
+    public void removePlayer(Player player) {
+        Player current = getCurrentPlayer();
+        players.remove(player);
+        if(players.get(currentPlayerIndex) == null) {
+            nextPlayer();
+        }
+        if(players.size() < 1) {
+            gameState = GameState.LOSE;
+        }
     }
 
     @Override
@@ -112,26 +131,46 @@ public class Game {
         return players;
     }
 
-    public void takeGuess(char letter){
+    public Guess takeGuess(char letter){
         if (gameState == GameState.LOSE || gameState == GameState.WIN) {
             throw new IllegalStateException("Game is already finished");
         }
-        if (availableLetters.contains(letter)) {
+
+        Guess g = null; 
+        if(availableLetters.contains(letter) && uniqueLetters.contains(letter) && !guessedLetters.contains(letter)){
+            g = new Guess(letter, GuessType.CORRECT);
+            availableLetters.remove(letter);
             guessedLetters.add(letter);
-            attempts++;
-        } else {
-            guessedLetters.add(letter);
-            wrongAttempts++;
             attempts++;
         }
+        else if(!availableLetters.contains(letter) && uniqueLetters.contains(letter) && guessedLetters.contains(letter)) {
+            g = new Guess(letter, GuessType.ALREADY_GUESSED);
+            attempts++;
+            wrongAttempts++;
+        }
+        else {
+            g = new Guess(letter, GuessType.INCORRECT);
+            availableLetters.remove(letter);
+            guessedLetters.add(letter);
+            attempts++;
+            wrongAttempts++;
+        }
+
+
         if (wrongAttempts >= maxAttempts) {
             gameState = GameState.LOSE;
-            return;
         }
-        if (wordComplete()){
+        else if (wordComplete()){
             gameState = GameState.WIN;
-            return;
         }
+        else {
+            nextPlayer();
+        }
+
+        return g;
+    }
+
+    public void nextPlayer(){
         gameState = GameState.PLAYING;
         if(currentPlayerIndex >= players.size() - 1){
             currentPlayerIndex = 0;

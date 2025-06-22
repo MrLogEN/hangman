@@ -91,6 +91,7 @@ public class MessageListener implements Runnable{
                 activeWorkers.clear();
                 logger.debug("All workers of current thread have been cleared.");
             }
+            clientHandler.stopClient();
         }
     }
 }
