@@ -12,8 +12,8 @@ public class ListRoomsCommand implements Command{
     private final ClientHandler handler;
 
     public ListRoomsCommand(
-        RoomManager roomManager,
         ClientListRoomsMessage message,
+        RoomManager roomManager,
         ClientHandler handler
     ){
         this.roomManager = roomManager;

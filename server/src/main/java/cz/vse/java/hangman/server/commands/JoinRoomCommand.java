@@ -13,8 +13,8 @@ public class JoinRoomCommand implements Command{
     private final ClientHandler handler;
 
     public JoinRoomCommand(
-        RoomManager roomManager,
         ClientJoinRoomMessage message,
+        RoomManager roomManager,
         ClientHandler handler
     ){
         this.roomManager = roomManager;

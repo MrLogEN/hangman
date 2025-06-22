@@ -12,8 +12,8 @@ public class LeaveRoomCommand implements Command{
     private final ClientHandler handler;
 
     public LeaveRoomCommand(
-        RoomManager roomManager,
         ClientLeaveRoomMessage message,
+        RoomManager roomManager,
         ClientHandler handler
     ){
         this.roomManager = roomManager;

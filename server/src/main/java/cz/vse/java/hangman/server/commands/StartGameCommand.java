@@ -12,8 +12,8 @@ public class StartGameCommand implements Command{
     private final ClientHandler handler;
 
     public StartGameCommand(
-        RoomManager roomManager,
         ClientStartGameMessage message,
+        RoomManager roomManager,
         ClientHandler handler
     ){
         this.roomManager = roomManager;
