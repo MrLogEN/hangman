@@ -23,8 +23,8 @@ public class SyncClientGameCommand implements Command {
     private ServerSyncClientGameMessage serverSyncClientGameMessage;
 
 
-    public SyncClientGameCommand(SyncClientGameCommand syncClientGameCommand) {
-        this.serverSyncClientGameMessage = syncClientGameCommand.serverSyncClientGameMessage;
+    public SyncClientGameCommand(ServerSyncClientGameMessage serverSyncClientGameMessage) {
+        this.serverSyncClientGameMessage = serverSyncClientGameMessage;
     }
 
     /**
