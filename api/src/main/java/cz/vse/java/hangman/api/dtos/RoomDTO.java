@@ -1,7 +1,9 @@
 package cz.vse.java.hangman.api.dtos;
 
 import cz.vse.java.hangman.api.Room;
+import cz.vse.java.hangman.api.Player;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,7 +16,15 @@ import java.util.Set;
  */
 public record RoomDTO(String name, int maxPlayers, Set<PlayerDTO> playerDTOSet, PlayerDTO leader, GameDTO gameDTO) {
     public static RoomDTO fromRoom(Room room) {
-        //#TODO: implement this method
-        return null;
+        Set<PlayerDTO> players = new HashSet<>();
+        for(Player p: room.getPlayers()) {
+            players.add(PlayerDTO.fromPlayer(p));
+        }
+        return new RoomDTO(
+            room.getName(),
+            room.getMaxPlayers(), 
+            players,
+            PlayerDTO.fromPlayer(room.getLeader()),
+            GameDTO.fromGame(room.getGame()));
     }
 }

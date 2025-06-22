@@ -30,8 +30,8 @@ public class Game {
         if (room == null) {
             throw new IllegalArgumentException("Room cannot be null");
         }
-        if (maxAttempts <= 0) {
-            throw new IllegalArgumentException("Max attempts must be greater than 0");
+        if (maxAttempts <= 3) {
+            throw new IllegalArgumentException("Max attempts must be greater than 3");
         }
         this.id = UUID.randomUUID();
         this.room = room;

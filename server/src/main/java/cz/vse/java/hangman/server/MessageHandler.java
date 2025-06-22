@@ -8,6 +8,7 @@ import cz.vse.java.hangman.api.commands.Command;
 import cz.vse.java.hangman.api.commands.CommandFactory;
 import cz.vse.java.hangman.api.messages.Message;
 import cz.vse.java.hangman.api.messages.client.request.*;
+import cz.vse.java.hangman.server.commands.CreateRoomCommand;
 import cz.vse.java.hangman.server.commands.JoinRoomCommand;
 import cz.vse.java.hangman.server.commands.LeaveRoomCommand;
 import cz.vse.java.hangman.server.commands.ListRoomsCommand;
@@ -40,6 +41,7 @@ public class MessageHandler implements CommandFactory {
 
     private void registerFactories() {
         commandFactories.put(ClientLoginMessage.class, message -> new LoginCommand((ClientLoginMessage) message, roomManager, handler));
+        commandFactories.put(ClientCreateRoomMessage.class, message -> new CreateRoomCommand((ClientCreateRoomMessage) message, roomManager, handler));
         commandFactories.put(ClientJoinRoomMessage.class, message -> new JoinRoomCommand((ClientJoinRoomMessage) message, roomManager, handler));
         commandFactories.put(ClientLeaveRoomMessage.class, message -> new LeaveRoomCommand((ClientLeaveRoomMessage) message, roomManager, handler));
         commandFactories.put(ClientListRoomsMessage.class, message -> new ListRoomsCommand((ClientListRoomsMessage) message, roomManager, handler));

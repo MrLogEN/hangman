@@ -7,6 +7,7 @@ import cz.vse.java.hangman.api.Room;
 import cz.vse.java.hangman.api.messages.Message;
 import cz.vse.java.hangman.api.messages.serialization.MessageWrapper;
 import cz.vse.java.hangman.api.messages.server.request.ServerSyncClientGameMessage;
+import cz.vse.java.hangman.api.messages.server.request.ServerSyncClientRoomMessage;
 import cz.vse.java.hangman.api.messages.server.response.*;
 import cz.vse.java.hangman.api.dtos.*;
 
@@ -168,5 +169,13 @@ public class ServerMessageFactory {
      */
     public static ServerLeaveRoomFailureMessage createServerLeaveRoomFailureMessage(String reason) {
         return new ServerLeaveRoomFailureMessage(reason);
+    }
+
+    /**
+     * Creates an instance of {@link cz.vse.java.hangman.api.messages.server.request.ServerSyncClientRoomMessage}.
+     */
+    public static ServerSyncClientRoomMessage createServerSyncClientRoomMessage(Room room) {
+        RoomDTO dto = RoomDTO.fromRoom(room);
+        return new ServerSyncClientRoomMessage(dto);
     }
 }
