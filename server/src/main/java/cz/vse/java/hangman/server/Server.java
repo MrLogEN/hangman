@@ -34,6 +34,7 @@ public class Server {
                 Socket socket = serverSocket.accept();
                 ClientHandler client = new ClientHandler(socket, roomManager, workerFactory);
                 clients.add(client);
+                client.startClient();
             }
 
         }
