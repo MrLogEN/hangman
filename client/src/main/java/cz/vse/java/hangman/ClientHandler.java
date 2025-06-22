@@ -10,10 +10,9 @@ import cz.vse.java.hangman.commands.ClientCommandFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 /**
@@ -21,10 +20,10 @@ import java.net.Socket;
  * It handles sending and receiving messages to and from the server.
  * It also deserializes incoming messages and executes the appropriate commands based on the message type.
  */
-public class ClientHandler implements Runnable{
+public class ClientHandler {
     private Socket socket;
-    private BufferedReader in;
-    private PrintWriter out;
+    private ObjectInputStream in;
+    private ObjectOutputStream out;
     private Gson gson;
     private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
 
@@ -39,10 +38,11 @@ public class ClientHandler implements Runnable{
     public void connect(String host, int port) throws IOException {
         socket = new Socket(host, port);
         logger.info("Connected to server {}", socket);
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        logger.info("Input stream initialized.");
-        out = new PrintWriter(socket.getOutputStream(), true);
-        logger.info("Output stream initialized.");
+        out = new ObjectOutputStream(socket.getOutputStream());
+        out.flush();
+        logger.info("ObjectOutputStream initialized.");
+        in = new ObjectInputStream(socket.getInputStream());
+        logger.info("ObjectInputStream initialized.");
 
         gson = new GsonBuilder()
                 .registerTypeAdapter(MessageWrapper.class, new MessageWrapperDeserializer())
@@ -50,8 +50,10 @@ public class ClientHandler implements Runnable{
                 .create();
         logger.info("Gson {} initialized.", gson);
 
-        new Thread(this).start();
-        logger.info("ClientHandler thread started.");
+        new Thread(this::listen).start();
+        logger.info("ClientHandler listen thread started.");
+        new Thread(this::writeLoop).start();
+        logger.info("ClientHandler write thread started.");
     }
 
     /**
@@ -60,40 +62,41 @@ public class ClientHandler implements Runnable{
      */
     private void listen() {
         try {
-            String line;
-            while ((line = in.readLine()) != null) {
-                logger.info("Received message: {}", line);
-                MessageWrapper wrapper = gson.fromJson(line, MessageWrapper.class);
-                logger.info("Deserialized message: {}", wrapper);
-                ClientCommandFactory commandFactory = new ClientCommandFactory();
-                commandFactory.fromMessage(wrapper.message()).execute();
-                logger.info("Executing command for message: {}", wrapper.message());
+            Object obj;
+            while ((obj = in.readObject()) != null) {
+                if (obj instanceof String line) {
+                    logger.info("Received message: {}", line);
+                    MessageWrapper wrapper = gson.fromJson(line, MessageWrapper.class);
+                    logger.info("Deserialized message: {}", wrapper);
+                    ClientCommandFactory commandFactory = new ClientCommandFactory();
+                    commandFactory.fromMessage(wrapper.message()).execute();
+                    logger.info("Executing command for message: {}", wrapper.message());
+                }
             }
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             logger.error("Error while reading from server: {}", e.getMessage());
         }
     }
 
-    /**
-     * Method to send messages to the server.
-     *
-     * @param message the message
-     */
+    private final java.util.concurrent.BlockingQueue<Message> outgoingMessages = new java.util.concurrent.LinkedBlockingQueue<>();
+
     public void send(Message message) {
-        MessageWrapper wrapper = new MessageWrapper(message, message.getClass());
-        String json = gson.toJson(wrapper);
-        logger.info("Sending message: {} to server", json);
-        out.println(json);
+        outgoingMessages.offer(message);
     }
 
-
-
-    /**
-     * Method that starts the listening process.
-     */
-    @Override
-    public void run() {
-        listen();
+    private void writeLoop() {
+        try {
+            while (true) {
+                Message message = outgoingMessages.take();
+                MessageWrapper wrapper = new MessageWrapper(message, message.getClass());
+                String json = gson.toJson(wrapper);
+                logger.info("Sending message: {} to server", json);
+                out.writeObject(json);
+                out.flush();
+            }
+        } catch (InterruptedException | IOException e) {
+            logger.error("Error in writeLoop: {}", e.getMessage());
+        }
     }
 }

@@ -5,6 +5,7 @@ import cz.vse.java.hangman.api.commands.Command;
 import cz.vse.java.hangman.api.commands.CommandFactory;
 import cz.vse.java.hangman.api.messages.Message;
 import cz.vse.java.hangman.api.messages.server.request.ServerSyncClientGameMessage;
+import cz.vse.java.hangman.api.messages.server.request.ServerSyncClientRoomMessage;
 import cz.vse.java.hangman.api.messages.server.response.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +65,13 @@ public class ClientCommandFactory implements CommandFactory {
             }  else if (message instanceof ServerSyncClientGameMessage serverSyncClientGameMessage) {
                 return new SyncClientGameCommand(serverSyncClientGameMessage);
 
+            }else if (message instanceof ServerSyncClientRoomMessage serverSyncClientRoomMessage) {
+                return new SyncClientRoomCommand(serverSyncClientRoomMessage);
+
             }
+
+
+
             else {
                 logger.error("Error while creating command from message: {}", message);
                 throw new IllegalArgumentException();

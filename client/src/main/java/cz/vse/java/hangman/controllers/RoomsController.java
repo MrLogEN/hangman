@@ -90,7 +90,7 @@ public class RoomsController {
 
         Platform.runLater(() -> {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/create-room.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/ui/createroom.fxml"));
                 Parent root = loader.load();
 
                 CreateRoomController createRoomController = loader.getController();

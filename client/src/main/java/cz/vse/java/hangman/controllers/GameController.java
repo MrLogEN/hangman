@@ -1,6 +1,7 @@
 package cz.vse.java.hangman.controllers;
 
 import cz.vse.java.hangman.ClientHandler;
+import cz.vse.java.hangman.api.Player;
 import cz.vse.java.hangman.api.dtos.GameDTO;
 import cz.vse.java.hangman.api.dtos.PlayerDTO;
 import cz.vse.java.hangman.api.dtos.RoomDTO;
@@ -276,7 +277,32 @@ public class GameController {
 
 
 
-        //TODO update player list kdo hraje
+
+        playersListView.getItems().clear();
+        PlayerDTO currentPlayer = currentGameDTO.currentPlayer();
+        for (Player player : currentGameDTO.players()) {
+            String playerName = player.getName();
+            playersListView.getItems().add(playerName);
+        }
+
+        playersListView.setCellFactory(lv -> new javafx.scene.control.ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    if (currentPlayer != null && item.equals(currentPlayer.name())) {
+                        setStyle("-fx-text-fill: green;");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            }
+        });
+
 
         char[] progress = currentGameDTO.wordProgress();
         StringBuilder wordBuilder = new StringBuilder();
@@ -369,6 +395,8 @@ logger.info("Updating hangman image to stage: {}", currentGameDTO.wrongAttempts(
      */
     public void setRoomDTO(RoomDTO roomDTO) {
         this.roomDTO = roomDTO;
+        updateRoom();
+
     }
 
 
@@ -412,5 +440,35 @@ logger.info("Updating hangman image to stage: {}", currentGameDTO.wrongAttempts(
                 '}';
     }
 
-}
 
+    /**
+     * Updates the room view with the current players.
+     */
+    private void updateRoom(){
+        playersListView.getItems().clear();
+        PlayerDTO currentPlayer = currentGameDTO.currentPlayer();
+        for (Player player : currentGameDTO.players()) {
+            String playerName = player.getName();
+            playersListView.getItems().add(playerName);
+        }
+
+        playersListView.setCellFactory(lv -> new javafx.scene.control.ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    if (currentPlayer != null && item.equals(currentPlayer.name())) {
+                        setStyle("-fx-text-fill: green;");
+                    } else {
+                        setStyle("");
+                    }
+                }
+            }
+        });
+
+    }
+}

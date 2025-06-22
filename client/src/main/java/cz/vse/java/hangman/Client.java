@@ -32,7 +32,7 @@ public final class Client extends Application {
         clientHandler = new ClientHandler();
         try {
             logger.info("Connecting to server.");
-            clientHandler.connect("localhost", 12345);
+            clientHandler.connect("localhost", 8080);
         } catch (Exception e) {
             logger.error("Failed to connect to server: {}", e.getMessage());
             return;
