@@ -60,6 +60,5 @@ public class ListRoomsSuccessCommand implements Command {
 
 
 
-//TODO
     }
 }

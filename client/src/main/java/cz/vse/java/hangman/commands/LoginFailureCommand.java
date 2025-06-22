@@ -24,7 +24,7 @@ public class LoginFailureCommand implements Command {
     }
 
 
-/**
+    /**
      * Displays an error message to the user indicating that the login failed.
      * The message is displayed in the login controller's message label.
      */
