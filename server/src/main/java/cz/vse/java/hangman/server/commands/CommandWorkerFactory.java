@@ -3,6 +3,9 @@ package cz.vse.java.hangman.server.commands;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
+/**
+ * Factory for easy creation of threads for workers
+ */
 public class CommandWorkerFactory implements ThreadFactory{
 
     private final AtomicLong threadCount = new AtomicLong(1);

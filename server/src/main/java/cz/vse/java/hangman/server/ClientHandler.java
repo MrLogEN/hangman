@@ -14,6 +14,10 @@ import cz.vse.java.hangman.api.Player;
 import cz.vse.java.hangman.api.messages.Message;
 import cz.vse.java.hangman.server.commands.CommandWorkerFactory;
 
+
+/**
+ * This class handles incoming connection to {@link Server}
+ */
 public class ClientHandler {
     private static final Logger logger = LoggerFactory.getLogger(ClientHandler.class);
     private final RoomManager roomManager;
@@ -41,6 +45,11 @@ public class ClientHandler {
         logger.debug("Listening for client's messages.");
     }
 
+    /**
+     * Associates {@link ClientHandler} instance with a {@link Player}.
+     *
+     * @param player to associate client with
+     */
     public void setPlayer(Player player) {
         synchronized(player) {
             this.player = player;
@@ -53,6 +62,9 @@ public class ClientHandler {
         }
     }
 
+    /**
+     * Stops the client
+     */
     public void stopClient(){
         if(messageListener != null) {
             messageListener.interrupt();
@@ -73,10 +85,20 @@ public class ClientHandler {
 
     }
 
+    /**
+     * Adds a message to message queue.
+     * The queue is being handler by {@link MessageWriter}
+     *
+     * @param message to be sent to the client
+     */
     public void addMessageToQueue(Message message) {
         messageQueue.offer(message);
     }
 
+    /**
+     * Starts listening for incoming messages 
+     * and writing outgoing messages.
+     */
     public void startClient() {
         try {
             messageWriter = new Thread(new MessageWriter(socket, this, roomManager, messageQueue));

@@ -13,6 +13,9 @@ import org.slf4j.LoggerFactory;
 
 import cz.vse.java.hangman.server.commands.CommandWorkerFactory;
 
+/**
+ * This class represents the server
+ */
 public class Server {
 
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
@@ -30,6 +33,12 @@ public class Server {
         clients.remove(handler);
     }
 
+
+    /**
+     * Start server on selected port.
+     *
+     * @param port to start server on
+     */
     public void start(int port){
         logger.info("Starting server on port: {}", port);
         try (ServerSocket serverSocket = new ServerSocket(port);) {
