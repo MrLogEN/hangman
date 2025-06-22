@@ -18,13 +18,11 @@ public class Server {
     private static final Logger logger = LoggerFactory.getLogger(Server.class);
     private final RoomManager roomManager;
     private final CommandWorkerFactory workerFactory;
-    private final MessageHandler messageHandler;
     private final List<ClientHandler> clients;
 
     public Server(){
         this.roomManager = new RoomManager();
         this.workerFactory = new CommandWorkerFactory();
-        this.messageHandler = new MessageHandler(roomManager);
         this.clients = new LinkedList<>();
     }
 
@@ -34,7 +32,7 @@ public class Server {
             logger.info("The server has started and is waining for connections.");
             while(true) {
                 Socket socket = serverSocket.accept();
-                ClientHandler client = new ClientHandler(socket, roomManager, messageHandler, workerFactory);
+                ClientHandler client = new ClientHandler(socket, roomManager, workerFactory);
                 clients.add(client);
             }
 

@@ -28,14 +28,13 @@ public class ClientHandler {
     public ClientHandler(
         Socket socket,
         RoomManager roomManager,
-        MessageHandler messageHandler,
         CommandWorkerFactory commandWorkerFactory
     ) {
         this.socket = socket;
         this.roomManager = roomManager;
         this.commandWorkerFactory = commandWorkerFactory;
-        this.messageHandler = messageHandler; 
         messageQueue = new LinkedBlockingQueue<>();
+        messageHandler = new MessageHandler(roomManager, this);
     }
 
     public void setPlayer(Player player) {
@@ -67,8 +66,7 @@ public class ClientHandler {
 
     public void startClient() {
         try(ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())
-    ) {
+        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
             messageWriter = new Thread(new MessageWriter(outputStream, this, roomManager, messageQueue));
             messageListener = new Thread(new MessageListener(inputStream, this, roomManager, messageHandler, commandWorkerFactory));
             messageWriter.start();
