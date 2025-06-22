@@ -10,8 +10,8 @@ import cz.vse.java.hangman.api.messages.Message;
 import cz.vse.java.hangman.api.messages.client.request.ClientStartGameMessage;
 import cz.vse.java.hangman.api.messages.server.ServerMessageFactory;
 import cz.vse.java.hangman.server.ClientHandler;
+import cz.vse.java.hangman.server.CzechWordGenerator;
 import cz.vse.java.hangman.server.RoomManager;
-import cz.vse.java.hangman.server.StaticWordGenerator;
 
 public class StartGameCommand implements Command{
 
@@ -28,7 +28,7 @@ public class StartGameCommand implements Command{
         this.roomManager = roomManager;
         this.message = message;
         this.handler = handler;
-        this.generator = new StaticWordGenerator();
+        this.generator = new CzechWordGenerator();
     }
 
     @Override
@@ -57,15 +57,14 @@ public class StartGameCommand implements Command{
             return;
         }
 
-        Game game = room.getGame();
-        if(game != null || game.getGameState() == GameState.PLAYING) {
+        Game game = roomManager.getRoomGame(room);
+        if(game != null && game.getGameState() == GameState.PLAYING) {
             response = ServerMessageFactory.createServerStartGameFailureMessage("The game is alredy running.");
             handler.addMessageToQueue(response);
             return;
         }
 
-        //TODO: create real generator
-        game = new Game(room, 10, generator);
+        game = new Game(room, 100, generator);
 
         roomManager.startGame(room, game);
 

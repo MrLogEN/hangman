@@ -39,7 +39,7 @@ public class CreateRoomCommand implements Command{
             return;
         }
 
-        Room result = roomManager.createRoom(message.roomName(), message.owner(), message.capacity());
+        Room result = roomManager.createRoom(message.roomName(), message.owner(), message.capacity(), handler);
         if(result == null) {
             response = ServerMessageFactory.createServerCreateRoomFailureMessage("The capacity is probably too low, capacity must be >= 1.");
         }
