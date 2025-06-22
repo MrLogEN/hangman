@@ -21,5 +21,14 @@ public record MessageWrapper(Message message, Type type) {
             throw new IllegalArgumentException("Message cannot be null");
         }
     }
+
+    public <T extends Message> T unwrap() {
+        return (T) message;
+    }
+
+    public static MessageWrapper wrap(Message message){
+        return new MessageWrapper(message, message.getClass());
+    }
+
 }
 

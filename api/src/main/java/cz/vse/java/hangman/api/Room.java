@@ -22,6 +22,61 @@ public class Room {
     public Set<Player> getPlayers() {
         return players;
     }
+    public String getName() {
+        return name;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    public Player getLeader() {
+        return leader;
+    }
+
+    public void setLeader(Player player) {
+        this.leader = player;
+    }
+
+    public Game getGame() {
+        return game;
+    }
+
+    public void setGame(Game game) {
+        this.game = game;
+    }
+
+    public void addPlayer(Player player) {
+        synchronized(players) {
+            players.add(player);
+        } 
+    }
+
+    public Player getPlayer(String playerName) {
+        for (Player player : players) {
+            if(player.getName().equals(playerName)) {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public Player getPlayer(Player player) {
+        for (Player p: players) {
+            if(p.equals(player)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
+    public void removePlayer(String playerName) {
+        Player dummy = new Player(playerName);
+        players.remove(dummy);
+    }
+    public void removePlayer(Player player) {
+        players.remove(player);
+    }
 
     @Override
     public int hashCode() {
