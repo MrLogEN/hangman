@@ -2,6 +2,7 @@ package cz.vse.java.hangman.server;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 
 import com.google.gson.Gson;
@@ -16,7 +17,7 @@ import cz.vse.java.hangman.api.messages.serialization.MessageWrapperSerializer;
 
 public class MessageWriter implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(MessageWriter.class);
-    private final ObjectOutputStream objectOutputStream;
+    private final Socket socket;
     private final ClientHandler clientHandler;
     private final RoomManager roomManager;
     private final BlockingQueue<Message> messageQueue;
@@ -25,12 +26,12 @@ public class MessageWriter implements Runnable {
         .create();
 
     public MessageWriter(
-        ObjectOutputStream objectOutputStream,
+        Socket socket,
         ClientHandler clientHandler,
         RoomManager roomManager,
         BlockingQueue<Message> messageQueue
     ) {
-        this.objectOutputStream = objectOutputStream;
+        this.socket = socket;
         this.clientHandler = clientHandler;
         this.roomManager = roomManager;
         this.messageQueue = messageQueue;
@@ -38,13 +39,13 @@ public class MessageWriter implements Runnable {
 
     @Override
     public void run() {
-        try {
+        try(ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());) {
             while(!Thread.currentThread().isInterrupted()) {
                 Message message = messageQueue.take();
                 MessageWrapper wrapper = MessageWrapper.wrap(message);
                 String json = gson.toJson(wrapper);
-                objectOutputStream.writeObject(json);
-                objectOutputStream.flush();
+                out.writeObject(json);
+                out.flush();
             }
 
         }

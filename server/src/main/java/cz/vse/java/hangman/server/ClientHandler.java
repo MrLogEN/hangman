@@ -35,6 +35,7 @@ public class ClientHandler {
         this.commandWorkerFactory = commandWorkerFactory;
         messageQueue = new LinkedBlockingQueue<>();
         messageHandler = new MessageHandler(roomManager, this);
+        logger.debug("Listening for client's messages.");
     }
 
     public void setPlayer(Player player) {
@@ -56,6 +57,13 @@ public class ClientHandler {
         if(messageWriter != null) {
             messageWriter.interrupt();
         }
+        try {
+            socket.close();
+            logger.info("Client stopped and socket closed");
+        }
+        catch(IOException e) {
+            logger.error("Failed to close client socket", e);
+        }
         logger.info("Client stopped");
 
     }
@@ -65,14 +73,13 @@ public class ClientHandler {
     }
 
     public void startClient() {
-        try(ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream())) {
-            messageWriter = new Thread(new MessageWriter(outputStream, this, roomManager, messageQueue));
-            messageListener = new Thread(new MessageListener(inputStream, this, roomManager, messageHandler, commandWorkerFactory));
+        try {
+            messageWriter = new Thread(new MessageWriter(socket, this, roomManager, messageQueue));
+            messageListener = new Thread(new MessageListener(socket, this,roomManager, messageHandler, commandWorkerFactory));
             messageWriter.start();
             messageListener.start();
         }
-        catch (IOException e) {
+        catch (Exception e) {
             logger.error("There was an error handling a client.", e);
         }
     }

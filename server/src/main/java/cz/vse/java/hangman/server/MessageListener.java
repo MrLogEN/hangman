@@ -2,6 +2,8 @@ package cz.vse.java.hangman.server;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +23,7 @@ import org.slf4j.Logger;
 
 public class MessageListener implements Runnable{
     private final Logger logger = LoggerFactory.getLogger(MessageListener.class);
-    private final ObjectInputStream inputStream;
+    private final Socket socket;
     private final ClientHandler clientHandler;
     private final RoomManager roomManager;
     private final MessageHandler messageHandler;
@@ -32,13 +34,13 @@ public class MessageListener implements Runnable{
         .create();
 
     public MessageListener(
-        ObjectInputStream inputStream,
+        Socket socket,
         ClientHandler clientHandler,
         RoomManager roomManager,
         MessageHandler messageHandler,
         CommandWorkerFactory workerFactory
     ) {
-        this.inputStream = inputStream;
+        this.socket = socket;
         this.clientHandler = clientHandler;
         this.roomManager = roomManager;
         this.messageHandler = messageHandler;
@@ -48,9 +50,11 @@ public class MessageListener implements Runnable{
     @Override
     public void run() {
 
-        try {
+        try (ObjectInputStream inputStream = new ObjectInputStream(socket.getInputStream());){
             while(!Thread.currentThread().isInterrupted()) {
+                logger.debug("Trying to read a message");
                 Object o = inputStream.readObject();
+                logger.debug("Received object: {}", o);
                 if(o instanceof String message) {
                     try {
                         MessageWrapper wrapper = gson.fromJson(message, MessageWrapper.class);
@@ -69,6 +73,9 @@ public class MessageListener implements Runnable{
                 }
             }
         }
+        catch (SocketException e) {
+            logger.error("Socket closed when reading the input stream: {}", e.getMessage(), e);
+        }
         catch (IOException e) {
             logger.error("I/O error occurred while reading from input stream", e);
         }
@@ -79,15 +86,10 @@ public class MessageListener implements Runnable{
             synchronized(activeWorkers) {
                 for(Thread thread: activeWorkers) {
                     thread.interrupt();
+                    logger.debug("CommandWorkers interrupted: {}", thread.getName());
                 }
                 activeWorkers.clear();
-            }
-            try {
-                inputStream.close();
-                logger.info("Input stream closed successfully");
-            }
-            catch (IOException e) {
-                logger.error("Failed to close input stream", e);
+                logger.debug("All workers of current thread have been cleared.");
             }
         }
     }
