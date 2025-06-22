@@ -47,7 +47,7 @@ public class RoomManager {
 
     }
 
-    public Collection<Player> getAllPlayers() {
+    public Collection<Player> getAllUnassignedPlayers() {
         return Collections.unmodifiableCollection(unassignedPlayers.values());
     }
 
@@ -78,9 +78,23 @@ public class RoomManager {
         return Collections.unmodifiableCollection(rooms.values());
     }
 
-    private boolean playerIsInRoom(Player player) {
+    public boolean playerIsInRoom(Player player) {
         return rooms.values().stream()
             .anyMatch(room -> room.getPlayers().contains(player));
+    }
+
+    public synchronized Player findPlayer(String name) {
+        Player player = unassignedPlayers.get(name);
+        if(player == null) {
+            for (Room room: rooms.values()) {
+                for (Player p: room.getPlayers()) {
+                    if(p.getName().equals(name)) {
+                        player = p;
+                    }
+                }
+            }
+        }
+        return player;
     }
 
 }
