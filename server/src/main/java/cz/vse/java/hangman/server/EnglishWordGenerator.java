@@ -29,7 +29,7 @@ public class EnglishWordGenerator implements WordGenerator{
         if (cachedWords == null) {
             cachedWords = loadWords();
         }
-        String word = cachedWords.get(new Random().nextInt(cachedWords.size()));
+        String word = cachedWords.get(new Random().nextInt(cachedWords.size())).toUpperCase();
         logger.debug("Generated word: {}", word);
         return word;
     }
@@ -42,7 +42,7 @@ public class EnglishWordGenerator implements WordGenerator{
     }
 
     private static List<String> loadWords() {
-        try (InputStream inputStream = EnglishWordGenerator.class.getResourceAsStream("/czech_nouns.txt");
+        try (InputStream inputStream = EnglishWordGenerator.class.getResourceAsStream("/english_nouns.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
             List<String> words = reader.lines().collect(Collectors.toList());
@@ -61,7 +61,7 @@ public class EnglishWordGenerator implements WordGenerator{
     @Override
     public List<Character> getAlphabet() {
         var list = new ArrayList<Character>();
-        for (char c = 'a'; c <= 'z'; c++) {
+        for (char c = 'A'; c <= 'Z'; c++) {
             list.add(c);
         }
         return list;
