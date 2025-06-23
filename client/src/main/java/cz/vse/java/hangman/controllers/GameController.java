@@ -73,13 +73,35 @@ public class GameController {
     public void initialize() {
         logger.info("Initializing GameController: {}", this);
         logger.info(String.valueOf(isLeader));
-
         guessedLetters = new HashSet<>();
         correctLetters = new HashSet<>();
         guessNumber = 0;
         gameStarted = false;
 
+        for (Node node : letterGridPane.getChildren()) {
+            if (node instanceof Button button) {
+                button.setDisable(true);
+                button.setStyle("");
+            }
+        }
 
+        updateStartAndConfirmButtonText();
+    }
+
+
+    /**
+     * Updates the text of the start and confirm button based on the game state.
+     */
+    private void updateStartAndConfirmButtonText() {
+        if (isLeader) {
+            if (!gameStarted) {
+                startAndConfirmGuessButton.setText("Start");
+            } else {
+                startAndConfirmGuessButton.setText("Potvrdit");
+            }
+        } else {
+            startAndConfirmGuessButton.setText("Potvrdit");
+        }
     }
 
     /**
@@ -192,26 +214,21 @@ public class GameController {
     public void setGameStarted(boolean gameStarted) {
         this.gameStarted = gameStarted;
 
+        for (Node node : letterGridPane.getChildren()) {
+            if (node instanceof Button button) {
+                button.setDisable(!gameStarted);
+                button.setStyle("");
+            }
+        }
+
+        updateStartAndConfirmButtonText();
         if (!gameStarted) {
             guessNumber = 0;
             hangmanStages.clear();
             hangmanPane.getChildren().clear();
             guessedWordLabel.setText("");
-        logger.info("Game has not started yet. Resetting game state.");
-
-            for (Node node : letterGridPane.getChildren()) {
-                if (node instanceof Button button) {
-                    button.setDisable(true);
-                    button.setStyle("");
-                }
-            }
+            logger.info("Game has not started yet. Resetting game state.");
         } else {
-            for (Node node : letterGridPane.getChildren()) {
-                if (node instanceof Button button) {
-                    button.setDisable(false);
-                    button.setStyle("");
-                }
-            }
             logger.info("Game has started. Enabling letter buttons.");
         }
     }
@@ -259,7 +276,11 @@ public class GameController {
         char[] progress = currentGameDTO.wordProgress();
         StringBuilder wordBuilder = new StringBuilder();
         for (char c : progress) {
-            wordBuilder.append(c).append(" ");
+            if (c == '_' || c == '\u0000' || c == 0) {
+                wordBuilder.append(" _ ");
+            } else {
+                wordBuilder.append(c).append(" ");
+            }
         }
         guessedWordLabel.setText(wordBuilder.toString().trim());
         logger.info("Updating guessed word label: {}", guessedWordLabel.getText());
@@ -283,9 +304,9 @@ public class GameController {
                     if (guessedLetters.contains(letter)) {
                         button.setDisable(true);
                         if (correctLetters.contains(letter)) {
-                            button.setStyle("-fx-background-color: #90EE90;"); // Green
+                            button.setStyle("-fx-background-color: #90EE90;");
                         } else {
-                            button.setStyle("-fx-background-color: #FF7F7F;"); // Red
+                            button.setStyle("-fx-background-color: #FF7F7F;");
                         }
                     } else {
                         button.setDisable(false);
@@ -379,7 +400,8 @@ logger.info("Updating hangman image to stage: {}", currentGameDTO.wrongAttempts(
     public void setLeader(boolean leader) {
         isLeader = leader;
         if (startAndConfirmGuessButton != null) {
-            startAndConfirmGuessButton.setVisible(isLeader);
+            startAndConfirmGuessButton.setVisible(true);
+            updateStartAndConfirmButtonText();
         }
     }
 

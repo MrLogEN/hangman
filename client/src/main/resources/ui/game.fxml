@@ -169,7 +169,7 @@
                         <Font size="30.0" />
                      </font>
                   </Label>
-                  <Label fx:id="rightOrWrongLabel" text="Label">
+                  <Label fx:id="rightOrWrongLabel">
                      <font>
                         <Font size="30.0" />
                      </font>
