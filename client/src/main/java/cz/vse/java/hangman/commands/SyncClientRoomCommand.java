@@ -36,6 +36,7 @@ public class SyncClientRoomCommand implements Command {
             if (isMember) {
                 Registry.getInstance().getGameController().setRoomDTO(roomDto);
                 logger.info("Synchronizing room with new RoomDTO");
+                logger.info(serverSyncClientRoomMessage.roomDto().playerDTOSet().toString());
             } else {
                 LeaveRoomSuccessCommand leaveRoomSuccessCommand = new LeaveRoomSuccessCommand(null);
                 leaveRoomSuccessCommand.execute();

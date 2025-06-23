@@ -134,10 +134,10 @@ public class GameController {
             clientHandler.send(ClientMessageFactory.createClientStartGameMessage(playerDTO.name(), roomDTO.name()));
             logger.info("Sending start game message to the server");
         } else if (gameStarted) {
-            char realLetter = Character.toLowerCase(guessedLetter);
-            clientHandler.send(ClientMessageFactory.createClientTakeGuessMessage(realLetter));
+
+            clientHandler.send(ClientMessageFactory.createClientTakeGuessMessage(guessedLetter));
             logger.info("Sending guess: {} to the server", guessedLetter);
-            //TODO vratit
+
         }
 
 
