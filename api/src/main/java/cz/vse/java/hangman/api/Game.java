@@ -53,7 +53,7 @@ public class Game {
                 uniqueLetters.add(c);
             }
         }
-        this.maxAttempts = 3 * uniqueLetters.size();
+        this.maxAttempts = 11;
     }
 
     public UUID getId() {
