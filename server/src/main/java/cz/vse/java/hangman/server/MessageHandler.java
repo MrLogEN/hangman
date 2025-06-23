@@ -16,6 +16,10 @@ import cz.vse.java.hangman.server.commands.LoginCommand;
 import cz.vse.java.hangman.server.commands.StartGameCommand;
 import cz.vse.java.hangman.server.commands.TakeGuessCommand;
 
+/**
+ * This class is resposible for creating {@link Command}
+ * instances from {@link Message} insances.
+ */
 public class MessageHandler implements CommandFactory {
 
     private final RoomManager roomManager;

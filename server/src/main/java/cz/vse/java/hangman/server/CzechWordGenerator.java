@@ -16,6 +16,9 @@ import cz.vse.java.hangman.api.WordGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Generator of a random czeck word
+ */
 public class CzechWordGenerator implements WordGenerator{
 
     private static final Logger logger = LoggerFactory.getLogger(CzechWordGenerator.class);

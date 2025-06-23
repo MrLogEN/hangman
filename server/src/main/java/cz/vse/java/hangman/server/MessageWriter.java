@@ -15,6 +15,9 @@ import cz.vse.java.hangman.api.messages.Message;
 import cz.vse.java.hangman.api.messages.serialization.MessageWrapper;
 import cz.vse.java.hangman.api.messages.serialization.MessageWrapperSerializer;
 
+/**
+ * Handles sending messages back to client
+ */
 public class MessageWriter implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(MessageWriter.class);
     private final Socket socket;

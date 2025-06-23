@@ -21,6 +21,10 @@ import cz.vse.java.hangman.server.commands.CommandWorkerFactory;
 
 import org.slf4j.Logger;
 
+/**
+ * Handles listening for messages and their
+ * distribution to worker threads.
+ */
 public class MessageListener implements Runnable{
     private final Logger logger = LoggerFactory.getLogger(MessageListener.class);
     private final Socket socket;

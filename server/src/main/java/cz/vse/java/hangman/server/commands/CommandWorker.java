@@ -7,6 +7,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Workers can run commands in a separate thread.
+ */
 public class CommandWorker implements Runnable {
 
     private final Logger logger = LoggerFactory.getLogger(CommandWorker.class);

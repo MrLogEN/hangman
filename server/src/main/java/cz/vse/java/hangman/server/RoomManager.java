@@ -18,6 +18,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Handles logic of the game.
+ * Mainly Creating/deleting rooms, starting games, adding/removing players from rooms.
+ */
 public class RoomManager {
 
     private static final Logger logger = LoggerFactory.getLogger(RoomManager.class);
@@ -36,10 +40,22 @@ public class RoomManager {
         logger.info("Player {} joined the server");
     }
 
+    /**
+     * Removes player from the not-in-room state.
+     *
+     * @param name of the {@link Player} to remove.
+     */
     public synchronized void removePlayer(String name) {
         unassignedPlayers.remove(name);
     }
 
+    /**
+     * Adds a player to a room.
+     *
+     * @param roomName the name of room to add player to
+     * @param playerName the name of the player to add to the room.
+     * @param handler the {@link ClientHandler} associated to the player that is being addded.
+     */
     public synchronized void addPlayerToRoom(String roomName, String playerName, ClientHandler handler) {
         Room room = rooms.get(roomName);
         Player player = unassignedPlayers.get(playerName);
@@ -62,6 +78,12 @@ public class RoomManager {
         logger.info("Player {} joined room {}", playerName, roomName);
     }
 
+    /**
+     * Removes player from a room.
+     *
+     * @param playerName the player to be removed
+     * @param roomName the room to remove the player from
+     */
     public synchronized boolean removePlayerFromRoom(String playerName, String roomName) {
         Room room = rooms.get(roomName);
         if(room == null) {
@@ -93,10 +115,21 @@ public class RoomManager {
         return true;
     }
 
+    /**
+     * Gets all players that are not part of a room.
+     */
     public synchronized Collection<Player> getAllUnassignedPlayers() {
         return Collections.unmodifiableCollection(unassignedPlayers.values());
     }
 
+    /**
+     * Creates a room.
+     *
+     * @param roomName the name of the room to create
+     * @param owner the name of the owner {@link Player}
+     * @param capacity of the roomo
+     * @param handler of the owner
+     */
     public synchronized Room createRoom(String roomName, String owner, int capacity, ClientHandler handler) {
         if (rooms.containsKey(roomName)) {
             logger.warn("Room with the name {} alredy exists", roomName);
