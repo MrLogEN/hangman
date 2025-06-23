@@ -64,60 +64,6 @@ public class GameController {
 
    private Set<Character> correctLetters;
 
-/*
-    @FXML
-    private Button letterAButton;
-    @FXML
-    private Button letterBButton;
-    @FXML
-    private Button letterCButton;
-    @FXML
-    private Button letterDButton;
-    @FXML
-    private Button letterEButton;
-    @FXML
-    private Button letterFButton;
-    @FXML
-    private Button letterGButton;
-    @FXML
-    private Button letterHButton;
-    @FXML
-    private Button letterIButton;
-    @FXML
-    private Button letterJButton;
-    @FXML
-    private Button letterKButton;
-    @FXML
-    private Button letterLButton;
-    @FXML
-    private Button letterMButton;
-    @FXML
-    private Button letterNButton;
-    @FXML
-    private Button letterOButton;
-    @FXML
-    private Button letterPButton;
-    @FXML
-    private Button letterQButton;
-    @FXML
-    private Button letterRButton;
-    @FXML
-    private Button letterSButton;
-    @FXML
-    private Button letterTButton;
-    @FXML
-    private Button letterUButton;
-    @FXML
-    private Button letterVButton;
-    @FXML
-    private Button letterWButton;
-    @FXML
-    private Button letterXButton;
-    @FXML
-    private Button letterYButton;
-    @FXML
-    private Button letterZButton;
-*/
 
 
     /**
@@ -126,15 +72,12 @@ public class GameController {
     @FXML
     public void initialize() {
         logger.info("Initializing GameController: {}", this);
+        logger.info(String.valueOf(isLeader));
 
         guessedLetters = new HashSet<>();
         correctLetters = new HashSet<>();
         guessNumber = 0;
         gameStarted = false;
-
-        if (!isLeader) {
-            startAndConfirmGuessButton.setVisible(false);
-        }
 
 
     }
@@ -147,20 +90,20 @@ public class GameController {
     @FXML
     private void handleLetterClick(ActionEvent actionEvent) {
         Button clickedButton = (Button) actionEvent.getSource();
-        String letter = clickedButton.getText();
-        guessedLetter = letter.charAt(0);
-
 
         for (Node node : letterGridPane.getChildren()) {
-            if (node instanceof Button button && !button.isDisabled()) {
-                button.setStyle("");
+            if (node instanceof Button button) {
+                String text = button.getText().toUpperCase();
+                if (!guessedLetters.contains(text.charAt(0))) {
+                    button.setDisable(false);
+                    button.setStyle("");
+                }
             }
         }
 
-
         clickedButton.setDisable(true);
         clickedButton.setStyle("-fx-background-color: #90EE90;");
-
+        guessedLetter = clickedButton.getText().charAt(0);
         logger.info("Selected letter: {}", guessedLetter);
     }
 
@@ -191,8 +134,10 @@ public class GameController {
             clientHandler.send(ClientMessageFactory.createClientStartGameMessage(playerDTO.name(), roomDTO.name()));
             logger.info("Sending start game message to the server");
         } else if (gameStarted) {
-            clientHandler.send(ClientMessageFactory.createClientTakeGuessMessage(guessedLetter));
+            char realLetter = Character.toLowerCase(guessedLetter);
+            clientHandler.send(ClientMessageFactory.createClientTakeGuessMessage(realLetter));
             logger.info("Sending guess: {} to the server", guessedLetter);
+            //TODO vratit
         }
 
 
@@ -218,11 +163,18 @@ public class GameController {
      * @param guessNumber the guess number
      */
     public void updateHangmanImage(int guessNumber) {
-        String imagePath = "/images/hangman/stage" + guessNumber + ".png";
-        ImageView newImage = new ImageView(getClass().getResource(imagePath).toExternalForm());
+        String imagePath = "/images/stage" + guessNumber + ".png";
+        java.net.URL imageUrl = getClass().getResource(imagePath);
+        if (imageUrl == null) {
+            logger.error("Hangman image not found: {} or there are no guesses yet", imagePath);
+            return;
+        }
+        ImageView newImage = new ImageView(imageUrl.toExternalForm());
+
+        newImage.setFitWidth(hangmanPane.getPrefWidth());
+        newImage.setFitHeight(hangmanPane.getPrefHeight());
+        newImage.setPreserveRatio(true);
         hangmanStages.add(newImage);
-
-
         hangmanPane.getChildren().clear();
         for (ImageView image : hangmanStages) {
             hangmanPane.getChildren().add(image);
@@ -426,6 +378,9 @@ logger.info("Updating hangman image to stage: {}", currentGameDTO.wrongAttempts(
      */
     public void setLeader(boolean leader) {
         isLeader = leader;
+        if (startAndConfirmGuessButton != null) {
+            startAndConfirmGuessButton.setVisible(isLeader);
+        }
     }
 
     @Override
@@ -445,6 +400,10 @@ logger.info("Updating hangman image to stage: {}", currentGameDTO.wrongAttempts(
      * Updates the room view with the current players.
      */
     private void updateRoom(){
+        if (currentGameDTO == null) {
+            logger.info("updateRoom called but currentGameDTO is null");
+            return;
+        }
         playersListView.getItems().clear();
         PlayerDTO currentPlayer = currentGameDTO.currentPlayer();
         for (Player player : currentGameDTO.players()) {

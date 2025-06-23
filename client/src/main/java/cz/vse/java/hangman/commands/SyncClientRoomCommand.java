@@ -27,9 +27,20 @@ public class SyncClientRoomCommand implements Command {
      */
     @Override
     public void execute() {
-        Platform.runLater(  () -> {
-            Registry.getInstance().getGameController().setRoomDTO(serverSyncClientRoomMessage.roomDto());
-             logger.info("Synchronizing room with new RoomDTO");
+        Platform.runLater(() -> {
+
+            var playerDTO = Registry.getInstance().getPlayerDTO();
+            var roomDto = serverSyncClientRoomMessage.roomDto();
+            boolean isMember = roomDto.playerDTOSet().stream()
+                    .anyMatch(p -> p.name().equals(playerDTO.name()));
+            if (isMember) {
+                Registry.getInstance().getGameController().setRoomDTO(roomDto);
+                logger.info("Synchronizing room with new RoomDTO");
+            } else {
+                LeaveRoomSuccessCommand leaveRoomSuccessCommand = new LeaveRoomSuccessCommand(null);
+                leaveRoomSuccessCommand.execute();
+                logger.info("Player is no longer in the room, skipping GameController update.");
+            }
         });
     }
 }

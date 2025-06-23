@@ -53,18 +53,19 @@ public class CreateRoomSuccessCommand implements Command {
                 Registry.getInstance().getGameController().setClientHandler(Registry.getInstance().getClientHandler());
 
 
-                Registry.getInstance().getGameController().setRoomDTO(serverCreateRoomSuccessMessage.roomDTO());
-                logger.info("Setting up roomDTO: {} in GameController.", Registry.getInstance().getGameController().getRoomDTO());
-
-                Registry.getInstance().getGameController().setPlayerDTO(Registry.getInstance().getPlayerDTO());
-                logger.info("Setting up PlayerDTO: {} in GameController.", Registry.getInstance().getGameController().getPlayerDTO());
-
 
                 if (serverCreateRoomSuccessMessage.roomDTO().leader().name().equals(Registry.getInstance().getPlayerDTO().name())) {
                     Registry.getInstance().getGameController().setLeader(true);
                 } else {
                     Registry.getInstance().getGameController().setLeader(false);
                 }
+
+                Registry.getInstance().getGameController().setRoomDTO(serverCreateRoomSuccessMessage.roomDTO());
+                logger.info("Setting up roomDTO: {} in GameController.", Registry.getInstance().getGameController().getRoomDTO());
+
+                Registry.getInstance().getGameController().setPlayerDTO(Registry.getInstance().getPlayerDTO());
+                logger.info("Setting up PlayerDTO: {} in GameController.", Registry.getInstance().getGameController().getPlayerDTO());
+
 
                 Registry.getInstance().getPrimaryStage().setScene(scene);
 
