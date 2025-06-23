@@ -10,7 +10,7 @@ import cz.vse.java.hangman.api.messages.Message;
 import cz.vse.java.hangman.api.messages.client.request.ClientStartGameMessage;
 import cz.vse.java.hangman.api.messages.server.ServerMessageFactory;
 import cz.vse.java.hangman.server.ClientHandler;
-import cz.vse.java.hangman.server.CzechWordGenerator;
+import cz.vse.java.hangman.server.EnglishWordGenerator;
 import cz.vse.java.hangman.server.RoomManager;
 
 public class StartGameCommand implements Command{
@@ -28,7 +28,7 @@ public class StartGameCommand implements Command{
         this.roomManager = roomManager;
         this.message = message;
         this.handler = handler;
-        this.generator = new CzechWordGenerator();
+        this.generator = new EnglishWordGenerator();
     }
 
     @Override

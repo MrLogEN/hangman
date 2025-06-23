@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Generator of a random czeck word
  */
-public class CzechWordGenerator implements WordGenerator{
+public class EnglishWordGenerator implements WordGenerator{
 
-    private static final Logger logger = LoggerFactory.getLogger(CzechWordGenerator.class);
+    private static final Logger logger = LoggerFactory.getLogger(EnglishWordGenerator.class);
     private static List<String> cachedWords;
 
     @Override
@@ -42,7 +42,7 @@ public class CzechWordGenerator implements WordGenerator{
     }
 
     private static List<String> loadWords() {
-        try (InputStream inputStream = CzechWordGenerator.class.getResourceAsStream("/czech_nouns.txt");
+        try (InputStream inputStream = EnglishWordGenerator.class.getResourceAsStream("/czech_nouns.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
 
             List<String> words = reader.lines().collect(Collectors.toList());
@@ -61,8 +61,7 @@ public class CzechWordGenerator implements WordGenerator{
     @Override
     public List<Character> getAlphabet() {
         var list = new ArrayList<Character>();
-        char[] czechAlphabet = {'a', 'á', 'b', 'c', 'č', 'd', 'ď', 'e', 'é', 'ě', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l', 'm', 'n', 'ň', 'o', 'ó', 'p', 'q', 'r', 'ř', 's', 'š', 't', 'ť', 'u', 'ú', 'ů', 'v', 'w', 'x', 'y', 'ý', 'z', 'ž'};
-        for (char c : czechAlphabet) {
+        for (char c = 'a'; c <= 'z'; c++) {
             list.add(c);
         }
         return list;

@@ -41,7 +41,7 @@ cd hangman
 ```
 From the root of the repository run the following command
 ```bash
-mvn package
+mvn clean package
 ```
 Now you can run each module individually from the project root.
 ```bash
